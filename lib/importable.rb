@@ -2,6 +2,7 @@ require 'carrierwave'
 require 'roo'
 
 require "importable/engine"
+require "importable/row"
 require "importable/exceptions"
 require "importable/mapper"
 require "importable/uploader"
