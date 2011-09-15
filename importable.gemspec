@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = Importable::VERSION
   s.authors     = ["Mike Bannister"]
   s.email       = ["mikebannister@gmail.com"]
-  s.homepage    = "https://github.com/mikebannister"
+  s.homepage    = "https://github.com/mikebannister/importable"
   s.summary     = "Import spreadsheets and map data to rails models, easily."
   s.description = "Import spreadsheets and map data to rails models, easily."
 
