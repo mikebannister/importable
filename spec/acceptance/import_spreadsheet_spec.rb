@@ -30,4 +30,15 @@ feature "Import spreadsheet" do
     click_button "Upload"
     page.should have_content "Doof can't be blank (line 3)"
   end
+  
+  scenario "Import invalid multi worksheet spreadsheet" do
+    spreadsheet_file = support_file('foo_multi_worksheet_required_field_invalid.xlsx')
+
+    visit '/importable/foo_required_field'
+    attach_file("Choose foo required field spreadsheet file", spreadsheet_file)
+    click_button "Upload"
+    page.should have_content "Choose worksheet"
+    click_button "Continue"
+    page.should have_content "Doof can't be blank (line 3)"
+  end
 end

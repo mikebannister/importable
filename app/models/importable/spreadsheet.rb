@@ -8,7 +8,7 @@ module Importable
     mount_uploader :file, Importable::Uploader
 
     validates_presence_of :file
-    validates_with Importable::Validator
+    validates_with Importable::Validator, :if => Proc.new { persisted? or (file.current_path and sheets.length <= 1) }
 
     def headers
       @headers ||= spreadsheet.row(first_row)

@@ -3,11 +3,11 @@ require 'spec_helper'
 module Importable
   describe Uploader do
 
-    let(:importable_spreadsheet) { Spreadsheet.new }
+    let(:spreadsheet) { Spreadsheet.new }
 
     before do
       Importable::Uploader.enable_processing = false
-      @uploader = Importable::Uploader.new(importable_spreadsheet, :file)
+      @uploader = Importable::Uploader.new(spreadsheet, :file)
     end
 
     after do
