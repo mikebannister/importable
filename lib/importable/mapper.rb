@@ -21,7 +21,10 @@ module Importable
     end
 
     def map_to_objects!
-      @data = @raw_data.flat_map { |row| map_row(row) }
+      @data = @raw_data.flat_map do |raw_row|
+        row = Importable::Row.new(raw_row)
+        map_row(row)
+      end
     end
   
     def save_objects!
