@@ -2,23 +2,33 @@ require 'spec_helper'
 
 module Importable
   describe Spreadsheet do
-    let(:single_worksheet_importable_spreadsheet) do
+    let(:single_worksheet_spreadsheet) do
       spreadsheet_file = File.open support_file('foo_single_worksheet.xlsx')
       Spreadsheet.new(object_type: 'foo', file: spreadsheet_file)
     end
 
-    let(:multi_worksheet_importable_spreadsheet) do
+    let(:invalid_spreadsheet) do
+      spreadsheet_file = File.open support_file('foo_required_field_invalid.xlsx')
+      Spreadsheet.new(object_type: 'foo_required_field', file: spreadsheet_file)
+    end
+
+    let(:invalid_multi_spreadsheet) do
+      spreadsheet_file = File.open support_file('foo_multi_worksheet_required_field_invalid.xlsx')
+      Spreadsheet.new(object_type: 'foo_required_field', file: spreadsheet_file)
+    end
+
+    let(:multi_worksheet_spreadsheet) do
       spreadsheet_file = File.open support_file('foo_multi_worksheet.xlsx')
       Spreadsheet.new(file: spreadsheet_file)
     end
 
-    let(:older_excel_importable_spreadsheet) do
+    let(:older_excel_spreadsheet) do
       spreadsheet_file = File.open support_file('foo_single_worksheet.xls')
       Spreadsheet.new(file: spreadsheet_file)
     end
 
     it "should be valid with valid attributes" do
-      single_worksheet_importable_spreadsheet.should be_valid
+      single_worksheet_spreadsheet.should be_valid
     end
 
     it "should be invalid without a file" do
@@ -26,52 +36,65 @@ module Importable
       spreadsheet.should_not be_valid
     end
 
+    it "should be invalid with an invalid file" do
+      invalid_spreadsheet.should_not be_valid
+    end
+
+    it "should be valid with an invalid file if there are multiple sheets but none has been selected" do
+      invalid_multi_spreadsheet.should be_valid
+    end
+
+    it "should be invalid with an invalid file if there are multiple sheets but one has been selected (implied by the object being saved)" do
+      invalid_multi_spreadsheet.save!
+      invalid_multi_spreadsheet.should be_invalid
+    end
+
     describe "#headers" do
       it "should return a list of header values" do
-        single_worksheet_importable_spreadsheet.headers.should eq %w[ a b c d ]
+        single_worksheet_spreadsheet.headers.should eq %w[ a b c d ]
       end
     end
 
     describe "#import!" do
       it "should initialize a mapper to handle the actual importing" do
-        data = single_worksheet_importable_spreadsheet.rows
+        data = single_worksheet_spreadsheet.rows
         mapper = FooMapper.new(data)
 
         FooMapper.should_receive(:new).and_return(mapper)
 
-        single_worksheet_importable_spreadsheet.import!
+        single_worksheet_spreadsheet.import!
       end
     end
 
     describe "#sheets" do
       it "should return a list of header values" do
-        multi_worksheet_importable_spreadsheet.sheets.should eq %w[ Sheet1 Sheet2 ]
+        multi_worksheet_spreadsheet.sheets.should eq %w[ Sheet1 Sheet2 ]
       end
     end
 
     describe "#spreadsheet" do
       it "should be an Excel spreadsheet object if the file is an xls file" do
-        older_excel_importable_spreadsheet.spreadsheet.should be_an Excel
+        older_excel_spreadsheet.spreadsheet.should be_an Excel
       end
 
       it "should be an Excelx spreadsheet object if the file is an xlsx file" do
-        multi_worksheet_importable_spreadsheet.spreadsheet.should be_an Excelx
+        multi_worksheet_spreadsheet.spreadsheet.should be_an Excelx
       end
     end
 
     describe "#spreadsheet_class" do
       it "should be an Excel class object if the file is an xls file" do
-        older_excel_importable_spreadsheet.spreadsheet_class.should eq Excel
+        older_excel_spreadsheet.spreadsheet_class.should eq Excel
       end
 
       it "should be an Excelx class object if the file is an xlsx file" do
-        multi_worksheet_importable_spreadsheet.spreadsheet_class.should eq Excelx
+        multi_worksheet_spreadsheet.spreadsheet_class.should eq Excelx
       end
     end
 
     describe "#rows" do
       it "should return the spreadsheet rows as a list of hashes" do
-        rows = single_worksheet_importable_spreadsheet.rows
+        rows = single_worksheet_spreadsheet.rows
 
         rows.each do |row|
           row.keys.should eq %w[ a b c d ]
@@ -86,7 +109,7 @@ module Importable
 
     describe "#mapper_class" do
       it "should return the mapper class for the spreadsheet" do
-        mapper_class = single_worksheet_importable_spreadsheet.mapper_class
+        mapper_class = single_worksheet_spreadsheet.mapper_class
         mapper_class.should eq FooMapper
       end
 
@@ -105,7 +128,7 @@ module Importable
 
     describe "#mapper" do
       it "should return the mapper instance for the spreadsheet" do
-        mapper = single_worksheet_importable_spreadsheet.mapper
+        mapper = single_worksheet_spreadsheet.mapper
         mapper.should be_a FooMapper
       end
     end
