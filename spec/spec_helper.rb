@@ -14,3 +14,7 @@ RSpec.configure do |config|
   config.mock_with :rspec
   config.use_transactional_fixtures = false
 end
+
+def support_file(name)
+  File.expand_path("spec/support/#{name}")
+end

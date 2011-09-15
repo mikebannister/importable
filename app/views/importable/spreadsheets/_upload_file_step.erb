@@ -1,0 +1,12 @@
+<%= form_tag spreadsheets_path(type: @type), enctype: 'multipart/form-data' do %>
+  <%= render "errors" %>
+
+  <h2>File upload</h2>
+
+  <p><%= label_tag :file, "Choose #{@type.humanize.downcase} spreadsheet file" %></p>
+  <p><%= file_field_tag :file %></p>
+
+  <%= hidden_field_tag :current_step, 'upload_file' %>
+
+  <%= render "actions", :label => 'Upload' %>
+<% end %>
