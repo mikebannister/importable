@@ -1,0 +1,6 @@
+<div class="actions">
+  <p>
+    <%= submit_tag label %>
+    <%= submit_tag "Back", :name => "back_button" unless @spreadsheet.first_step? %>
+  </p>
+</div>

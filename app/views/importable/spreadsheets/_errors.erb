@@ -1,0 +1,11 @@
+<% if @spreadsheet.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@spreadsheet.errors.count, "error") %> prohibited this importable_spreadsheet from being saved:</h2>
+
+    <ul>
+    <% @spreadsheet.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>

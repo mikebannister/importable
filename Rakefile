@@ -22,18 +22,16 @@ end
 
 APP_RAKEFILE = File.expand_path("../spec/dummy/Rakefile", __FILE__)
 load 'rails/tasks/engine.rake'
-
+load 'rspec/rails/tasks/rspec.rake'
 
 Bundler::GemHelper.install_tasks
 
-require 'rake/testtask'
-
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib'
-  t.libs << 'test'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = false
+namespace :db do
+  namespace :test do
+    task :prepare do
+      # Stub out for engine
+    end
+  end
 end
 
-
-task :default => :test
+task :default => 'spec'
