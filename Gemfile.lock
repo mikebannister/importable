@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    importable (0.0.1)
+    importable (0.0.2)
       carrierwave
       google-spreadsheet-ruby
       rails (~> 3.1.0)
