@@ -41,4 +41,16 @@ feature "Import spreadsheet" do
     click_button "Continue"
     page.should have_content "Doof can't be blank (line 3)"
   end
+
+  scenario "Import redirects to index page if requested" do
+    spreadsheet_file = support_file('foo_multi_worksheet.xlsx')
+
+    visit '/importable/foo?return_to=index'
+    attach_file("Choose foo spreadsheet file", spreadsheet_file)
+    click_button "Upload"
+    page.should have_content "Choose worksheet"
+    click_button "Continue"
+    page.should have_content "Sheet1 worksheet of foo spreadsheet was successfully imported."
+    page.should have_content "Foos index"
+  end
 end
