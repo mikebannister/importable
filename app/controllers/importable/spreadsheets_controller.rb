@@ -21,7 +21,12 @@ module Importable
             else
               "#{@spreadsheet.default_sheet} worksheet of #{@type} spreadsheet was successfully imported."
             end
-            redirect_to spreadsheet_path(id: @spreadsheet.id, type: @type), notice: notice
+            return_to = if params[:return_to] == 'index'
+              main_app.send "#{@type.pluralize}_path".to_sym
+            else
+              spreadsheet_path(id: @spreadsheet.id, type: @type)
+            end
+            redirect_to return_to, notice: notice
             return
           end
           @spreadsheet.previous_step

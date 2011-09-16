@@ -138,6 +138,12 @@ module Importable
                 response.should redirect_to("/importable/foo/#{multi_spreadsheet.id}")
               end
 
+              it "should redirect to the object type's index view if import is successful and params[:return_to] is set to index" do
+                multi_spreadsheet.stub(:import!).and_return(true)
+                post :create, type: 'foo', current_step: 'choose_worksheet', spreadsheet_id: multi_spreadsheet.id, return_to: 'index', :use_route => :importable
+                response.should redirect_to("/foos")
+              end
+
               it "should render 'new' if import is unsuccessful" do
                 multi_spreadsheet.stub(:import!).and_return(false)
                 post :create, type: 'foo', current_step: 'choose_worksheet', spreadsheet_id: multi_spreadsheet.id, :use_route => :importable
