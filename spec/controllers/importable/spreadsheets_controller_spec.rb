@@ -59,7 +59,7 @@ module Importable
           end
         end
 
-        context "parse and map" do
+        context "import data" do
           context "#init_spreadsheet!" do
             it "assigns the existing spreadsheet as @spreadsheet" do
               post :create, type: 'foo', current_step: 'choose_worksheet', spreadsheet_id: spreadsheet.id, :use_route => :importable
@@ -95,6 +95,11 @@ module Importable
             it "should set the default sheet if specified" do
               post :create, type: 'foo', current_step: 'choose_worksheet', spreadsheet_id: spreadsheet.id, default_sheet: 1, :use_route => :importable
               assigns(:spreadsheet).default_sheet.should eq 'Sheet2'
+            end
+
+            it "should parse the default sheet if specified" do
+              post :create, type: 'foo', current_step: 'choose_worksheet', spreadsheet_id: spreadsheet.id, default_sheet: 1, :use_route => :importable
+              assigns(:spreadsheet).headers.should eq %w[ q r s t ]
             end
 
             it "should use the first sheet if non are specified" do

@@ -8,6 +8,7 @@ module Importable
 
     def create
       init_spreadsheet!
+      set_default_sheet!
 
       if @spreadsheet.valid?
         set_current_step!
@@ -59,9 +60,14 @@ module Importable
     end
 
     def import!
-      default_sheet = @spreadsheet.sheets[params[:default_sheet].to_i]
-      @spreadsheet.default_sheet = default_sheet
       @spreadsheet.import!
+    end
+
+    def set_default_sheet!
+      if params[:default_sheet]
+        default_sheet = @spreadsheet.sheets[params[:default_sheet].to_i]
+        @spreadsheet.default_sheet = default_sheet
+      end
     end
 
     def require_type_param

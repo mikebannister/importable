@@ -44,11 +44,6 @@ module Importable
       invalid_multi_spreadsheet.should be_valid
     end
 
-    it "should be invalid with an invalid file if there are multiple sheets but one has been selected (implied by the object being saved)" do
-      invalid_multi_spreadsheet.save!
-      invalid_multi_spreadsheet.should be_invalid
-    end
-
     describe "#headers" do
       it "should return a list of header values" do
         single_worksheet_spreadsheet.headers.should eq %w[ a b c d ]
@@ -89,6 +84,21 @@ module Importable
 
       it "should be an Excelx class object if the file is an xlsx file" do
         multi_worksheet_spreadsheet.spreadsheet_class.should eq Excelx
+      end
+    end
+
+    describe "#default_sheet_chosen?" do
+      it "should be false if the default worksheet has not been set" do
+        multi_worksheet_spreadsheet.default_sheet_chosen?.should be_false
+      end
+
+      it "should be true if the default worksheet has not been set but there is only one in the workbook" do
+        single_worksheet_spreadsheet.default_sheet_chosen?.should be_true
+      end
+
+      it "should be true if the default worksheet has been set" do
+        multi_worksheet_spreadsheet.default_sheet = 'Sheet1'
+        multi_worksheet_spreadsheet.default_sheet_chosen?.should be_true
       end
     end
 

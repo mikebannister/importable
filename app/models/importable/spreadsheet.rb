@@ -8,18 +8,23 @@ module Importable
     mount_uploader :file, Importable::Uploader
 
     validates_presence_of :file
-    validates_with Importable::Validator, :if => Proc.new { persisted? or (file.current_path and sheets.length <= 1) }
+    validates_with Importable::Validator, :if => :default_sheet_chosen?
 
     def headers
       @headers ||= spreadsheet.row(first_row)
     end
 
     def default_sheet=(sheet)
+      @default_sheet_chosen = true
       spreadsheet.default_sheet = sheet
     end
 
     def default_sheet
       spreadsheet.default_sheet
+    end
+
+    def default_sheet_chosen?
+      @default_sheet_chosen or (file.current_path and sheets.length == 1)
     end
 
     def spreadsheet
@@ -76,7 +81,7 @@ module Importable
     end
   
     private
-  
+
     def singular_mapper_class
       "#{object_type.singularize}_mapper".camelize.constantize rescue nil
     end
