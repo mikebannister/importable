@@ -12,7 +12,7 @@ module Importable
       save_objects!
     end
 
-    def map_row
+    def map_row(row)
       raise NotImplementedError.new('map_row method must be overriden by mapper')
     end
 
