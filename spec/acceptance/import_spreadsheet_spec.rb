@@ -7,7 +7,7 @@ feature "Import spreadsheet" do
     visit '/importable/foo'
     attach_file("Choose foo spreadsheet file", spreadsheet_file)
     click_button "Upload"
-    page.should have_content "'Sheet1' of foo spreadsheet was successfully imported."
+    page.should have_content "Foo spreadsheet was successfully imported."
   end
 
   scenario "Import spreadsheet with multiple worksheets" do
@@ -19,7 +19,7 @@ feature "Import spreadsheet" do
     page.should have_content "Choose worksheet"
     choose "Sheet2"
     click_button "Continue"
-    page.should have_content "'Sheet2' of foo spreadsheet was successfully imported."
+    page.should have_content "Sheet2 worksheet of foo spreadsheet was successfully imported."
   end
   
   scenario "Import invalid spreadsheet" do

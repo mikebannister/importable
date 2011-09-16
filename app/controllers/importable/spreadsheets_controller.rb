@@ -16,7 +16,11 @@ module Importable
 
         if @spreadsheet.last_step?
           if import!
-            notice = "'#{@spreadsheet.default_sheet}' of #{@type} spreadsheet was successfully imported."
+            notice = if @spreadsheet.sheets.one?
+              "#{@type.humanize} spreadsheet was successfully imported."
+            else
+              "#{@spreadsheet.default_sheet} worksheet of #{@type} spreadsheet was successfully imported."
+            end
             redirect_to spreadsheet_path(id: @spreadsheet.id, type: @type), notice: notice
             return
           end
