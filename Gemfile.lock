@@ -132,6 +132,7 @@ GEM
       ffi (>= 1.0.7)
       json_pure
       rubyzip
+    spork (0.8.5)
     spreadsheet (0.6.5.9)
       ruby-ole (>= 1.0)
     sprockets (2.0.0)
@@ -159,4 +160,5 @@ DEPENDENCIES
   importable!
   launchy
   rspec-rails
+  spork
   sqlite3
