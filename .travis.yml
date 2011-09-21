@@ -1,2 +1,4 @@
 rvm: 1.9.2
 script: "bundle exec rake db:migrate default --trace"
+notifications:
+  irc: "irc.freenode.org#m101"
