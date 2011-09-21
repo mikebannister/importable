@@ -1,9 +1,6 @@
 $:.push File.expand_path("../lib", __FILE__)
-
-# Maintain your gem's version:
 require "importable/version"
 
-# Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name        = "importable"
   s.version     = Importable::VERSION
@@ -13,7 +10,7 @@ Gem::Specification.new do |s|
   s.summary     = "Import spreadsheets and map data to rails models, easily."
   s.description = "Import spreadsheets and map data to rails models, easily."
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["spec/**/*"]
 
   s.add_dependency "rails", "~> 3.1.0"
