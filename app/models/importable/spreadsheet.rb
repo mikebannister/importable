@@ -62,22 +62,26 @@ module Importable
       end
     end
 
-    def self.mapper_files
-      Dir["#{Rails.root}/app/imports/**.rb"]
-    end
+    class << self
 
-    def self.mapper_types
-      mapper_files.map do |mapper_file|
-        file_name = File.basename(mapper_file, '.rb')
-        mapper_name = file_name.slice(0..-8) if file_name.ends_with?('_mapper')
-        mapper_name.try(:singularize)
-      end.compact
-    end
+      def mapper_files
+        Dir["#{Rails.root}/app/imports/**.rb"].sort
+      end
 
-    def self.mapper_type_exists?(type)
-      self.mapper_types.flat_map do |t|
-        [ t.pluralize, t.singularize ]
-      end.include?(type)
+      def mapper_types
+        mapper_files.map do |mapper_file|
+          file_name = File.basename(mapper_file, '.rb')
+          mapper_name = file_name.slice(0..-8) if file_name.ends_with?('_mapper')
+          mapper_name.try(:singularize)
+        end.compact
+      end
+
+      def mapper_type_exists?(type)
+        mapper_types.flat_map do |t|
+          [ t.pluralize, t.singularize ]
+        end.include?(type)
+      end
+
     end
   
     private
