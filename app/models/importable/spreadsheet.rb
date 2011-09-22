@@ -8,7 +8,7 @@ module Importable
     mount_uploader :file, Importable::Uploader
 
     validates_presence_of :file
-    validates_with Importable::Validator, :if => :imported_items_ready?
+    validates_with Importable::ImportedItemsValidator, :if => :imported_items_ready?
 
     def headers
       @headers ||= spreadsheet.row(first_row)

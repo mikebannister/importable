@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Importable
-  describe Validator do
+  describe ImportedItemsValidator do
     let(:valid_spreadsheet) do
       spreadsheet_file = support_file('foo_required_field_valid.xlsx')
       Spreadsheet.new(file: File.open(spreadsheet_file), object_type: 'foo_required_field')

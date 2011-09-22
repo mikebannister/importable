@@ -1,5 +1,5 @@
 module Importable
-  class Validator < ActiveModel::Validator
+  class ImportedItemsValidator < ActiveModel::Validator
     def validate(spreadsheet)
       if spreadsheet.file.try(:current_path)
         spreadsheet.mapper.invalid_objects.each do |object, line_number|
