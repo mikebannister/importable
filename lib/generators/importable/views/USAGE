@@ -14,3 +14,16 @@ Example:
         app/views/importable/spreadsheets/_upload_file_step.erb
         app/views/importable/spreadsheets/new.html.erb
         app/views/importable/spreadsheets/show.html.erb
+
+    rails generate importable:views foo
+
+    This will create:
+        app/views/importable/foos
+        app/views/importable/foos/spreadsheets
+        app/views/importable/foos/spreadsheets/_actions.erb
+        app/views/importable/foos/spreadsheets/_choose_worksheet_step.erb
+        app/views/importable/foos/spreadsheets/_errors.erb
+        app/views/importable/foos/spreadsheets/_form.html.erb
+        app/views/importable/foos/spreadsheets/_upload_file_step.erb
+        app/views/importable/foos/spreadsheets/new.html.erb
+        app/views/importable/foos/spreadsheets/show.html.erb
