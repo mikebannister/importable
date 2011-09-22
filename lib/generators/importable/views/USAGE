@@ -1,6 +1,8 @@
 Description:
     Copy the views from importable so you can override them
 
+    Include NAME to create the templates in a subdirectory. These will apply only to the mapper corresponding name.
+
 Example:
     rails generate importable:views
 
@@ -15,7 +17,7 @@ Example:
         app/views/importable/spreadsheets/new.html.erb
         app/views/importable/spreadsheets/show.html.erb
 
-    rails generate importable:views foo
+    rails generate importable:views foos
 
     This will create:
         app/views/importable/foos
