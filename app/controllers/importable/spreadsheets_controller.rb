@@ -23,12 +23,7 @@ module Importable
             else
               "#{@spreadsheet.default_sheet} worksheet of #{@type} spreadsheet was successfully imported."
             end
-            return_to = if params[:return_to] == 'index'
-              main_app.send "#{@type.pluralize}_path".to_sym
-            else
-              spreadsheet_path(id: @spreadsheet.id, type: @type)
-            end
-            redirect_to return_to, notice: notice
+            redirect_to return_url, notice: notice
             return
           end
           @spreadsheet.previous_step
@@ -44,6 +39,17 @@ module Importable
     end
 
     private
+
+    def return_url
+      index_path_sym = "#{@type.pluralize}_path".to_sym
+      if params[:return_to] == 'index' and self.respond_to?(index_path_sym)
+        main_app.foos_path
+      elsif params[:return_to] == 'import'
+        send(:new_spreadsheet_path, type: @type)
+      else
+        spreadsheet_path(id: @spreadsheet.id, type: @type)
+      end
+    end
 
     def import_template
       class_based_template if template_exists?(class_based_template)
