@@ -35,7 +35,6 @@ module Importable
       end
 
       # if not redirected
-      # render import_template, action: 'new'
       render action: 'new'
     end
 
