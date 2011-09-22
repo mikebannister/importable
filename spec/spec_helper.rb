@@ -33,12 +33,20 @@ end
 # helpers
 
 def override_import_templates(model, &block)
-  root_path = File.join(Rails.root, 'app/views/importable')
-  template_root_path = File.join(root_path, 'spreadsheets', model)
+  # figure out paths
+  root_path = File.join(Rails.root, 'app/views', model)
+  template_root_path = File.join(root_path, 'importable/spreadsheets')
   template_path = File.join(template_root_path, 'new.html.erb')
-  
+
+  # make dirs and file
   FileUtils.mkdir_p template_root_path
   FileUtils.touch template_path
+
+  # add some content that we can check for
+  File.open(template_path, 'w') { |file| file.write("#{model} content") }
+  
   yield
+
+  # cleanup
   FileUtils.rm_rf root_path
 end

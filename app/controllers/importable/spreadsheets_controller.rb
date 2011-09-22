@@ -1,10 +1,10 @@
 module Importable
   class SpreadsheetsController < ::ApplicationController
     before_filter :require_type_param
+    before_filter :prepend_map_specific_view_path
 
     def new
       @spreadsheet = Spreadsheet.new
-      render import_template
     end
 
     def create
@@ -35,7 +35,8 @@ module Importable
       end
 
       # if not redirected
-      render import_template, action: 'new'
+      # render import_template, action: 'new'
+      render action: 'new'
     end
 
     def show
@@ -93,6 +94,10 @@ module Importable
         raise Exceptions::ParamRequiredError.new("#{params[:type]} import mapper does not exist")
       end
       @type = params[:type]
+    end
+    
+    def prepend_map_specific_view_path
+      prepend_view_path File.join(Rails.root, 'app/views', @type.pluralize)
     end
   end
 end

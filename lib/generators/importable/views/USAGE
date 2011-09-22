@@ -9,23 +9,23 @@ Example:
     This will create:
         app/views/importable
         app/views/importable/spreadsheets
-        app/views/importable/spreadsheets/_actions.erb
-        app/views/importable/spreadsheets/_choose_worksheet_step.erb
-        app/views/importable/spreadsheets/_errors.erb
-        app/views/importable/spreadsheets/_form.html.erb
-        app/views/importable/spreadsheets/_upload_file_step.erb
+        app/views/importable/spreadsheets/_actions.html.erb
+        app/views/importable/spreadsheets/_choose_worksheet_step.html.erb
+        app/views/importable/spreadsheets/_errors.html.erb
+        app/views/importable/spreadsheets/_extras.html.erb
+        app/views/importable/spreadsheets/_upload_file_step.html.erb
         app/views/importable/spreadsheets/new.html.erb
         app/views/importable/spreadsheets/show.html.erb
 
     rails generate importable:views foos
 
     This will create:
-        app/views/importable/foos
-        app/views/importable/foos/spreadsheets
-        app/views/importable/foos/spreadsheets/_actions.erb
-        app/views/importable/foos/spreadsheets/_choose_worksheet_step.erb
-        app/views/importable/foos/spreadsheets/_errors.erb
-        app/views/importable/foos/spreadsheets/_form.html.erb
-        app/views/importable/foos/spreadsheets/_upload_file_step.erb
-        app/views/importable/foos/spreadsheets/new.html.erb
-        app/views/importable/foos/spreadsheets/show.html.erb
+        app/views/foos/importable
+        app/views/foos/importable/spreadsheets
+        app/views/foos/importable/spreadsheets/_actions.html.erb
+        app/views/foos/importable/spreadsheets/_choose_worksheet_step.html.erb
+        app/views/foos/importable/spreadsheets/_errors.html.erb
+        app/views/foos/importable/spreadsheets/_extras.html.erb
+        app/views/foos/importable/spreadsheets/_upload_file_step.html.erb
+        app/views/foos/importable/spreadsheets/new.html.erb
+        app/views/foos/importable/spreadsheets/show.html.erb

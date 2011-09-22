@@ -24,10 +24,13 @@ module Importable
         response.should render_template("importable/spreadsheets/new")
       end
 
-      it "should use the mapper specific template if it exists" do
-        override_import_templates('moofs') do
-          get :new, type: 'moof', :use_route => :importable
-          response.should render_template("importable/spreadsheets/moofs/new")
+      describe "with rendered views" do
+        render_views
+        it "should use the mapper specific template if it exists" do
+          override_import_templates('moofs') do
+            get :new, type: 'moof', :use_route => :importable
+            response.body.should have_content 'moofs content'
+          end
         end
       end
     end
