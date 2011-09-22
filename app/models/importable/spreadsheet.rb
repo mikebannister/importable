@@ -8,14 +8,14 @@ module Importable
     mount_uploader :file, Importable::Uploader
 
     validates_presence_of :file
-    validates_with Importable::Validator, :if => :default_sheet_chosen?
+    validates_with Importable::Validator, :if => :imported_items_ready?
 
     def headers
       @headers ||= spreadsheet.row(first_row)
     end
 
     def default_sheet=(sheet)
-      @default_sheet_chosen = true
+      @imported_items_ready = true
       spreadsheet.default_sheet = sheet
     end
 
@@ -23,8 +23,8 @@ module Importable
       spreadsheet.default_sheet
     end
 
-    def default_sheet_chosen?
-      @default_sheet_chosen or (file.current_path and sheets.length == 1)
+    def imported_items_ready?
+      @imported_items_ready or (file.current_path and sheets.length == 1)
     end
 
     def spreadsheet
