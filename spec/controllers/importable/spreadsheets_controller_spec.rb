@@ -31,7 +31,7 @@ module Importable
         context "choose worksheet step" do
           before do
             spreadsheet_new # load
-            Spreadsheet.stub!(:new).and_return(spreadsheet_new)
+            Spreadsheet.stubs(:new).returns(spreadsheet_new)
           end
 
           context "#init_spreadsheet!" do
@@ -50,7 +50,7 @@ module Importable
 
           context "#prepare_next_step!" do
             it "should save the @imported_spreadsheet" do
-              spreadsheet_new.should_receive(:save)
+              spreadsheet_new.expects(:save)
               post :create, type: 'foo', current_step: 'upload_file', :use_route => :importable
             end
 
@@ -78,7 +78,7 @@ module Importable
 
           context "#prepare_next_step!" do
             it "should not save the @imported_spreadsheet" do
-              multi_spreadsheet.should_not_receive(:save)
+              multi_spreadsheet.expects(:save).times(0)
               post :create, type: 'foo', current_step: 'choose_worksheet', spreadsheet_id: multi_spreadsheet.id, :use_route => :importable
             end
           
@@ -110,13 +110,13 @@ module Importable
             end
 
             it "should redirect with appropriate flash message for a multi workbook spreadsheet" do
-              multi_spreadsheet.stub(:import!).and_return(true)
+              multi_spreadsheet.stubs(:import!).returns(true)
               post :create, type: 'foo', current_step: 'choose_worksheet', spreadsheet_id: multi_spreadsheet.id, :use_route => :importable
               flash[:notice].should eq "Sheet1 worksheet of foo spreadsheet was successfully imported."
             end
 
             it "should redirect with appropriate flash message for a single workbook spreadsheet" do
-              single_spreadsheet.stub(:import!).and_return(true)
+              single_spreadsheet.stubs(:import!).returns(true)
               post :create, type: 'foo', current_step: 'choose_worksheet', spreadsheet_id: single_spreadsheet.id, :use_route => :importable
               flash[:notice].should eq "Foo spreadsheet was successfully imported."
             end
@@ -124,40 +124,40 @@ module Importable
             context "existing uploaded spreadsheet" do
               before do
                 multi_spreadsheet # load
-                Spreadsheet.stub!(:find).and_return(multi_spreadsheet)
+                Spreadsheet.stubs(:find).returns(multi_spreadsheet)
               end
 
               it "should call import! on the @spreadsheet" do
-                multi_spreadsheet.should_receive(:import!)
+                multi_spreadsheet.expects(:import!)
                 post :create, type: 'foo', current_step: 'choose_worksheet', spreadsheet_id: multi_spreadsheet.id, :use_route => :importable
               end
 
               it "should redirect to the show view if import is successful" do
-                multi_spreadsheet.stub(:import!).and_return(true)
+                multi_spreadsheet.stubs(:import!).returns(true)
                 post :create, type: 'foo', current_step: 'choose_worksheet', spreadsheet_id: multi_spreadsheet.id, :use_route => :importable
                 response.should redirect_to("/importable/foo/#{multi_spreadsheet.id}")
               end
 
               it "should redirect to the object type's index view if import is successful and params[:return_to] is set to index" do
-                multi_spreadsheet.stub(:import!).and_return(true)
+                multi_spreadsheet.stubs(:import!).returns(true)
                 post :create, type: 'foo', current_step: 'choose_worksheet', spreadsheet_id: multi_spreadsheet.id, return_to: 'index', :use_route => :importable
                 response.should redirect_to("/foos")
               end
 
               it "should render 'new' if import is unsuccessful" do
-                multi_spreadsheet.stub(:import!).and_return(false)
+                multi_spreadsheet.stubs(:import!).returns(false)
                 post :create, type: 'foo', current_step: 'choose_worksheet', spreadsheet_id: multi_spreadsheet.id, :use_route => :importable
                 response.should render_template("spreadsheets/new")
               end
 
               it "should prevent the current step from changing if import is unsuccessful" do
-                multi_spreadsheet.stub(:import!).and_return(false)
+                multi_spreadsheet.stubs(:import!).returns(false)
                 post :create, type: 'foo', current_step: 'choose_worksheet', spreadsheet_id: multi_spreadsheet.id, :use_route => :importable
                 assigns(:spreadsheet).current_step.should eq 'choose_worksheet'
               end
 
               it "should render 'new' if the file upload is invalid" do
-                multi_spreadsheet.stub(:valid?).and_return(false)
+                multi_spreadsheet.stubs(:valid?).returns(false)
                 post :create, type: 'foo', current_step: 'choose_worksheet', spreadsheet_id: multi_spreadsheet.id, :use_route => :importable
                 response.should render_template("spreadsheets/new")
               end
