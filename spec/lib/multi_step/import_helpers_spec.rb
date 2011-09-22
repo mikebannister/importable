@@ -61,7 +61,7 @@ module MultiStep
       end
 
       it "should step skip choosing worksheet if there's only one" do
-        foo_multi_step_import.stub(:sheets).and_return(['one fake worksheet'])
+        foo_multi_step_import.stubs(:sheets).returns(['one fake worksheet'])
 
         foo_multi_step_import.current_step.should eq 'upload_file'
         foo_multi_step_import.next_step
@@ -83,7 +83,7 @@ module MultiStep
       end
 
       it "should step skip choosing worksheet if there's only one" do
-        foo_multi_step_import.stub(:sheets).and_return(['one fake worksheet'])
+        foo_multi_step_import.stubs(:sheets).returns(['one fake worksheet'])
 
         foo_multi_step_import.current_step.should eq 'import_data'
         foo_multi_step_import.previous_step

@@ -55,7 +55,7 @@ module Importable
         data = single_worksheet_spreadsheet.rows
         mapper = FooMapper.new(data)
 
-        FooMapper.should_receive(:new).and_return(mapper)
+        FooMapper.expects(:new).returns(mapper)
 
         single_worksheet_spreadsheet.import!
       end
