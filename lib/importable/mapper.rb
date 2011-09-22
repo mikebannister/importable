@@ -3,7 +3,8 @@ module Importable
     attr_accessor :data
     attr_accessor :invalid_objects
   
-    def initialize(data)
+    def initialize(data, params={})
+      @params = params
       @raw_data = data
       @invalid_objects = []
     
@@ -52,6 +53,11 @@ module Importable
         line_number = (index + 2)
         @invalid_objects << [object, line_number] unless object.valid?
       end
+    end
+
+    def method_missing(sym, *args, &block)
+      return @params[sym] if !!@params[sym]
+      super(sym, *args, &block)
     end
   end
 end

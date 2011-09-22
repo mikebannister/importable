@@ -44,6 +44,27 @@ module Importable
       invalid_multi_spreadsheet.should be_valid
     end
 
+    let(:valid_import_param_spreadsheet) do
+      spreadsheet_file = support_file('foo_single_worksheet.xlsx')
+      Spreadsheet.new(
+        import_params: { foo_id: 1 },
+        file: File.open(spreadsheet_file), object_type: 'foo_required_param'
+      )
+    end
+
+    let(:invalid_import_param_spreadsheet) do
+      spreadsheet_file = support_file('foo_single_worksheet.xlsx')
+      Spreadsheet.new(file: File.open(spreadsheet_file), object_type: 'foo_required_param')
+    end
+
+    it "should be valid if the required params are present" do
+      valid_import_param_spreadsheet.should be_valid
+    end
+    
+    it "should be invalid if the required params are not present" do
+      invalid_import_param_spreadsheet.should_not be_valid
+    end
+
     describe "#headers" do
       it "should return a list of header values" do
         single_worksheet_spreadsheet.headers.should eq %w[ a b c d ]

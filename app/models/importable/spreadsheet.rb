@@ -39,7 +39,7 @@ module Importable
     end
 
     def mapper
-      mapper_class.new(rows)
+      mapper_class.new(rows, import_params)
     end
 
     def mapper_class
