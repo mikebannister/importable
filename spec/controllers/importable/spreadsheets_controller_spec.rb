@@ -3,17 +3,17 @@ require 'spec_helper'
 module Importable
   describe SpreadsheetsController do
     describe "GET new" do
-      it "assigns a new importable spreadsheet as @spreadsheet" do
+      it "should assign a new importable spreadsheet as @spreadsheet" do
         get :new, type: 'foo', :use_route => :importable
         assigns(:spreadsheet).should be_a Spreadsheet
       end
   
-      it "assigns the spreadsheet type as @type" do
+      it "should assign the spreadsheet's type as @type" do
         get :new, type: 'foo', :use_route => :importable
         assigns(:type).should eq 'foo'
       end
   
-      it "raises params exception if the mapper type is not valid" do
+      it "should raise a params exception if the mapper type is not valid" do
         expect {
           get :new, type: 'bar', :use_route => :importable
         }.to raise_error(Exceptions::ParamRequiredError, 'bar import mapper does not exist')
@@ -35,14 +35,14 @@ module Importable
           end
 
           context "#init_spreadsheet!" do
-            it "assigns the new spreadsheet as @spreadsheet" do
+            it "should assign the new spreadsheet as @spreadsheet" do
               post :create, type: 'foo', current_step: 'upload_file', :use_route => :importable
               assigns(:spreadsheet).should eq multi_spreadsheet
             end
           end
   
           context "#set_current_step!" do
-            it "sets the current_step to 'choose_worksheet' on @imported_spreadsheet" do
+            it "should set the current_step to 'choose_worksheet' on @imported_spreadsheet" do
               post :create, type: 'foo', current_step: 'upload_file', :use_route => :importable
               assigns(:spreadsheet).current_step.should eq 'choose_worksheet'
             end
@@ -63,14 +63,14 @@ module Importable
 
         context "import data" do
           context "#init_spreadsheet!" do
-            it "assigns the existing spreadsheet as @spreadsheet" do
+            it "should assign the existing spreadsheet as @spreadsheet" do
               post :create, type: 'foo', current_step: 'choose_worksheet', spreadsheet_id: multi_spreadsheet.id, :use_route => :importable
               assigns(:spreadsheet).should eq multi_spreadsheet
             end
           end
 
           context "#set_current_step!" do
-            it "sets the current_step to 'import_data' on @imported_spreadsheet" do
+            it "should set the current_step to 'import_data' on @imported_spreadsheet" do
               post :create, type: 'foo', current_step: 'choose_worksheet', spreadsheet_id: multi_spreadsheet.id, :use_route => :importable
               assigns(:spreadsheet).current_step.should eq 'import_data'
             end
@@ -167,7 +167,7 @@ module Importable
       end
 
       describe "GET show" do
-        it "assigns the importable spreadsheet identified by params[:id] as @spreadsheet" do
+        it "should assign the importable spreadsheet identified by params[:id] as @spreadsheet" do
           get :show, type: 'foo', id: multi_spreadsheet.id, :use_route => :importable
           assigns(:spreadsheet).should eq multi_spreadsheet
         end
