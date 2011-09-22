@@ -87,18 +87,18 @@ module Importable
       end
     end
 
-    describe "#default_sheet_chosen?" do
+    describe "#imported_items_ready?" do
       it "should be false if the default worksheet has not been set" do
-        multi_worksheet_spreadsheet.default_sheet_chosen?.should be_false
+        multi_worksheet_spreadsheet.imported_items_ready?.should be_false
       end
 
       it "should be true if the default worksheet has not been set but there is only one in the workbook" do
-        single_worksheet_spreadsheet.default_sheet_chosen?.should be_true
+        single_worksheet_spreadsheet.imported_items_ready?.should be_true
       end
 
       it "should be true if the default worksheet has been set" do
         multi_worksheet_spreadsheet.default_sheet = 'Sheet1'
-        multi_worksheet_spreadsheet.default_sheet_chosen?.should be_true
+        multi_worksheet_spreadsheet.imported_items_ready?.should be_true
       end
     end
 
