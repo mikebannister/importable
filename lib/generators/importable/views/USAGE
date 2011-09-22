@@ -1,0 +1,16 @@
+Description:
+    Copy the views from importable so you can override them
+
+Example:
+    rails generate importable:views
+
+    This will create:
+        app/views/importable
+        app/views/importable/spreadsheets
+        app/views/importable/spreadsheets/_actions.erb
+        app/views/importable/spreadsheets/_choose_worksheet_step.erb
+        app/views/importable/spreadsheets/_errors.erb
+        app/views/importable/spreadsheets/_form.html.erb
+        app/views/importable/spreadsheets/_upload_file_step.erb
+        app/views/importable/spreadsheets/new.html.erb
+        app/views/importable/spreadsheets/show.html.erb
