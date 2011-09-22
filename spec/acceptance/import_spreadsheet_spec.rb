@@ -53,4 +53,16 @@ feature "Import spreadsheet" do
     page.should have_content "Sheet1 worksheet of foo spreadsheet was successfully imported."
     page.should have_content "Foos index"
   end
+
+  scenario "Import redirects back to the import page if requested" do
+    spreadsheet_file = support_file('foo_multi_worksheet.xlsx')
+
+    visit '/importable/foo?return_to=import'
+    attach_file("Choose foo spreadsheet file", spreadsheet_file)
+    click_button "Upload"
+    page.should have_content "Choose worksheet"
+    click_button "Continue"
+    page.should have_content "Sheet1 worksheet of foo spreadsheet was successfully imported."
+    page.should have_content "Foo spreadsheet upload"
+  end
 end

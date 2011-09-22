@@ -5,7 +5,7 @@ module Importable
     def validate(spreadsheet)
       @spreadsheet = spreadsheet
       required_params.each do |required|
-        spreadsheet.errors[:base] << required[:message] if !!!import_params[required[:name]]
+        spreadsheet.errors[:base] << required[:message] if import_params[required[:name]].blank?
       end
     end
     
