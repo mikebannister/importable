@@ -31,13 +31,21 @@ You can also create map specific views. This is especially useful if you want th
 
     rails generate importable:view widgets
 
+Redirection after upload
+
+    TODO
+
 Write an import mapper
 
-  TODO
+    TODO
 
 Use the provided UI to import data
 
-  TODO
+    TODO
+
+Testing import mappers
+
+    TODO
 
 ## TODO ##
 
