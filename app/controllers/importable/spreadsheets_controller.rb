@@ -1,5 +1,5 @@
 module Importable
-  class SpreadsheetsController < ApplicationController
+  class SpreadsheetsController < ::ApplicationController
     before_filter :require_type_param
 
     def new
