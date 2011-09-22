@@ -4,6 +4,7 @@ module Importable
 
     def new
       @spreadsheet = Spreadsheet.new
+      render import_template
     end
 
     def create
@@ -34,7 +35,7 @@ module Importable
       end
 
       # if not redirected
-      render action: 'new'
+      render import_template, action: 'new'
     end
 
     def show
@@ -42,6 +43,14 @@ module Importable
     end
 
     private
+
+    def import_template
+      class_based_template if template_exists?(class_based_template)
+    end
+
+    def class_based_template
+      File.join('importable/spreadsheets', @type.pluralize, params[:action])
+    end
 
     def init_spreadsheet!
       @spreadsheet = begin

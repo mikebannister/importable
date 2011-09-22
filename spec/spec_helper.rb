@@ -29,3 +29,16 @@ Spork.each_run do
    
   Dummy::Application.reload_routes!
 end
+
+# helpers
+
+def override_import_templates(model, &block)
+  root_path = File.join(Rails.root, 'app/views/importable')
+  template_root_path = File.join(root_path, 'spreadsheets', model)
+  template_path = File.join(template_root_path, 'new.html.erb')
+  
+  FileUtils.mkdir_p template_root_path
+  FileUtils.touch template_path
+  yield
+  FileUtils.rm_rf root_path
+end
