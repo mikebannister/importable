@@ -2,12 +2,15 @@ module Importable
   class Spreadsheet < ActiveRecord::Base
     include MultiStep::ImportHelpers
 
+    attr_accessor :import_params
+
     delegate :first_row, :last_row, :sheets, :row, :to => :spreadsheet
     delegate :invalid_objects, :to => :mapper
 
     mount_uploader :file, Importable::Uploader
 
     validates_presence_of :file
+    validates_with Importable::ImportedItemParamsValidator
     validates_with Importable::ImportedItemsValidator, :if => :imported_items_ready?
 
     def headers

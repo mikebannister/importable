@@ -9,6 +9,7 @@ module Importable
 
     def create
       init_spreadsheet!
+      init_import_params!
       set_default_sheet!
 
       if @spreadsheet.valid?
@@ -60,6 +61,10 @@ module Importable
           Spreadsheet.find(params[:spreadsheet_id])
         end
       end
+    end
+
+    def init_import_params!
+      @spreadsheet.import_params = params[:import_params] if params[:import_params]
     end
 
     def set_current_step!
