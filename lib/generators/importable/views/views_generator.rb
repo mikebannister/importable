@@ -9,16 +9,19 @@ module Importable
         _actions
         _choose_worksheet_step
         _errors
+        _extras
         _upload_file_step
         new
         show
       ]
 
-      namespace = "#{name}/" unless name.blank?
-
       files.each do |file|
         from_path = "spreadsheets/#{file}.html.erb"
-        to_path = "app/views/importable/spreadsheets/#{namespace}#{file}.html.erb"
+        path_parts = []
+        path_parts.unshift("importable/spreadsheets/#{file}.html.erb")
+        # include the name as a namespace if it's not blank
+        path_parts.unshift(name) unless name.blank?
+        to_path = File.join('app/views', *path_parts)
         copy_file from_path, to_path
       end
     end

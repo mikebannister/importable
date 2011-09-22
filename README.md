@@ -27,6 +27,10 @@ You can use the included generator to copy the views if you'd like to customize 
 
     rails generate importable:views
 
+You can also create map specific views. This is especially useful if you want the form to provide extra info to the mapper. The generator can create these views for you if you pass the name of the mapper.
+
+    rails generate importable:view widgets
+
 Write an import mapper
 
   TODO
@@ -43,3 +47,4 @@ Make database optional
 Add support for other file types that roo supports
 Set gem versions with ~>
 Back button specs
+Figure out how to allow overriding map specific templates in app/views/importable/spreadsheets/foos rather than app/views/foos/importable/spreadsheets

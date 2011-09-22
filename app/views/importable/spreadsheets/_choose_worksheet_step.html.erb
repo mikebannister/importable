@@ -19,5 +19,6 @@
   <%= hidden_field_tag :spreadsheet_id, @spreadsheet.id %>
   <%= hidden_field_tag :current_step, 'choose_worksheet' %>
 
+  <%= render "extras" %>
   <%= render "actions", :label => 'Continue' %>
 <% end %>
