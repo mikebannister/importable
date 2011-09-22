@@ -18,6 +18,18 @@ module Importable
           get :new, type: 'bar', :use_route => :importable
         }.to raise_error(Exceptions::ParamRequiredError, 'bar import mapper does not exist')
       end
+
+      it "should use the base import template by default" do
+        get :new, type: 'foo', :use_route => :importable
+        response.should render_template("importable/spreadsheets/new")
+      end
+
+      it "should use the mapper specific template if it exists" do
+        override_import_templates('moofs') do
+          get :new, type: 'moof', :use_route => :importable
+          response.should render_template("importable/spreadsheets/moofs/new")
+        end
+      end
     end
 
     context "spreadsheet uploaded" do
