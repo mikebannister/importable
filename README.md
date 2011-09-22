@@ -39,6 +39,10 @@ Write an import mapper
 
     TODO
 
+Import parameters
+
+    TODO
+
 Use the provided UI to import data
 
     TODO
@@ -56,3 +60,4 @@ Add support for other file types that roo supports
 Set gem versions with ~>
 Back button specs
 Figure out how to allow overriding map specific templates in app/views/importable/spreadsheets/foos rather than app/views/foos/importable/spreadsheets
+Initializer for configuration, should allow setting the file upload path
