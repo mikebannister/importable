@@ -65,15 +65,12 @@ module Importable
         mapper = FooRequiredFieldMapper.new(data)
         mapper.should_not be_valid
       end
-
-      it "should be valid if the required params are present" do
+    end
+    
+    describe "#method_missing" do
+      it "should expose import params as attributes" do
         mapper = FooRequiredParamMapper.new(data, { foo_id: 1 })
-        mapper.should be_valid
-      end
-      
-      it "should be invalid if the required params are not present" do
-        mapper = FooRequiredParamMapper.new(data)
-        mapper.should_not be_valid
+        mapper.foo_id.should eq 1
       end
     end
   end
