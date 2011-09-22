@@ -54,6 +54,11 @@ module Importable
               post :create, type: 'foo', current_step: 'upload_file', :use_route => :importable
               assigns(:spreadsheet).should eq multi_spreadsheet
             end
+            
+            it "should set import_params on the spreadsheet from params[:import_params]" do
+              post :create, import_params: { moof: 1 }, type: 'foo', current_step: 'upload_file', :use_route => :importable
+              assigns(:spreadsheet).import_params.should eq ({ 'moof' => '1' })
+            end
           end
   
           context "#set_current_step!" do
@@ -81,6 +86,11 @@ module Importable
             it "should assign the existing spreadsheet as @spreadsheet" do
               post :create, type: 'foo', current_step: 'choose_worksheet', spreadsheet_id: multi_spreadsheet.id, :use_route => :importable
               assigns(:spreadsheet).should eq multi_spreadsheet
+            end
+
+            it "should set import_params on the spreadsheet from params[:import_params]" do
+              post :create, import_params: { moof: 1 }, type: 'foo', current_step: 'choose_worksheet', spreadsheet_id: multi_spreadsheet.id, :use_route => :importable
+              assigns(:spreadsheet).import_params.should eq ({ 'moof' => '1' })
             end
           end
 

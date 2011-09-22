@@ -55,15 +55,25 @@ module Importable
     end
 
     describe "#valid?" do
-      it "should be true if the incoming data is complete" do
+      it "should be valid if the incoming data is complete" do
         mapper = FooRequiredFieldMapper.new(data)
-        mapper.valid?.should be_true
+        mapper.should be_valid
       end
 
-      it "should be false if the incoming data is not complete" do
+      it "should be invalid if the incoming data is not complete" do
         data.second.delete(:doof)
         mapper = FooRequiredFieldMapper.new(data)
-        mapper.valid?.should be_false
+        mapper.should_not be_valid
+      end
+
+      it "should be valid if the required params are present" do
+        mapper = FooRequiredParamMapper.new(data, { foo_id: 1 })
+        mapper.should be_valid
+      end
+      
+      it "should be invalid if the required params are not present" do
+        mapper = FooRequiredParamMapper.new(data)
+        mapper.should_not be_valid
       end
     end
   end

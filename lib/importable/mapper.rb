@@ -12,6 +12,20 @@ module Importable
       save_objects!
     end
 
+    class << self
+      def require_param(name, message)
+        @required_params ||= []
+        @required_params << {
+          name: name,
+          message: message
+        }
+      end
+
+      def required_params
+        @required_params || []
+      end
+    end
+
     def map_row(row)
       raise NotImplementedError.new('map_row method must be overriden by mapper')
     end
