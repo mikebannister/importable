@@ -1,11 +1,22 @@
 require 'spec_helper'
 
 class FooMultiObjectMapper < Importable::Mapper
+  attr_accessor :before_callback_called
+  attr_accessor :after_callback_called
+  
   def map_row(row)
     [
       Foo.create!(row),
       Foo.create!(row)
     ]
+  end
+  
+  def before_mapping
+    @before_callback_called = true
+  end
+  
+  def after_mapping
+    @before_callback_called = true
   end
 end
 
@@ -46,6 +57,20 @@ module Importable
     it "data is flattened so mappers can return more than one object" do
       mapper = FooMultiObjectMapper.new(data)
       mapper.data.should have_exactly(6).items
+    end
+
+    it "should call the before mapping callback" do
+      FooMultiObjectMapper.any_instance.expects(:before_mapping)
+      
+      mapper = FooMultiObjectMapper.new(data)
+      mapper.before_callback_called.should be_true
+    end
+    
+    it "should call the after mapping callback" do
+      FooMultiObjectMapper.any_instance.expects(:after_mapping)
+
+      mapper = FooMultiObjectMapper.new(data)
+      mapper.before_callback_called.should be_true
     end
 
     it "saves three Foo objects using the FooMapper" do

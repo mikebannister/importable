@@ -8,7 +8,9 @@ module Importable
       @raw_data = data
       @invalid_objects = []
     
+      before_mapping
       map_to_objects!
+      after_mapping
       validate_objects!
       save_objects!
     end
@@ -27,7 +29,13 @@ module Importable
       end
     end
 
-    def map_row(row)
+    def before_mapping
+    end
+
+    def after_mapping
+    end
+
+    def map_row
       raise NotImplementedError.new('map_row method must be overriden by mapper')
     end
 
