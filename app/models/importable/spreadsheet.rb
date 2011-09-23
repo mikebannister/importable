@@ -5,7 +5,7 @@ module Importable
     attr_accessor :import_params
 
     delegate :first_row, :last_row, :sheets, :row, :to => :spreadsheet
-    delegate :invalid_objects, :to => :mapper
+    delegate :invalid_items, :to => :mapper
 
     mount_uploader :file, Importable::Uploader
 

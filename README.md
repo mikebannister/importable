@@ -53,6 +53,8 @@ Testing import mappers
 
 ## TODO ##
 
+Separate spreadsheet behavior from generic import behavior
+
 Moves strings to en.yaml
 DSL to make mappers cleaner
 Make database optional
