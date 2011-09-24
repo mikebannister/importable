@@ -53,8 +53,6 @@ Testing import mappers
 
 ## TODO ##
 
-Separate spreadsheet behavior from generic import behavior
-
 Moves strings to en.yaml
 DSL to make mappers cleaner
 Make database optional
@@ -63,3 +61,4 @@ Set gem versions with ~>
 Back button specs
 Figure out how to allow overriding map specific templates in app/views/importable/spreadsheets/foos rather than app/views/foos/importable/spreadsheets
 Initializer for configuration, should allow setting the file upload path
+Underscored attribute aliases to incoming names with spaces

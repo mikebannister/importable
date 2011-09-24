@@ -16,7 +16,7 @@ module Importable
       it "should raise a params exception if the mapper type is not valid" do
         expect {
           get :new, type: 'bar', :use_route => :importable
-        }.to raise_error(Exceptions::ParamRequiredError, 'bar import mapper does not exist')
+        }.to raise_error(ParamRequiredError, 'bar import mapper does not exist')
       end
       
       it "should use the base import template by default" do

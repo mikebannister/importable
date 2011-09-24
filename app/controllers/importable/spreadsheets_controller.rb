@@ -101,7 +101,7 @@ module Importable
 
     def require_type_param
       unless Spreadsheet.mapper_type_exists?(params[:type])
-        raise Exceptions::ParamRequiredError.new("#{params[:type]} import mapper does not exist")
+        raise ParamRequiredError.new("#{params[:type]} import mapper does not exist")
       end
       @type = params[:type]
     end

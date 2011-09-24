@@ -1,18 +1,18 @@
 module Importable
   class ImportedItemParamsValidator < ActiveModel::Validator
-    attr_reader :spreadsheet
+    attr_reader :importer
 
-    def validate(spreadsheet)
-      @spreadsheet = spreadsheet
+    def validate(importer)
+      @importer = importer
       required_params.each do |required|
-        spreadsheet.errors[:base] << required[:message] if import_params[required[:name]].blank?
+        importer.errors[:base] << required[:message] if import_params[required[:name]].blank?
       end
     end
     
     private
 
     def import_params
-      spreadsheet.import_params || {}
+      importer.import_params || {}
     end
 
     def required_params
@@ -20,7 +20,7 @@ module Importable
     end
 
     def mapper_class
-      spreadsheet.mapper_class
+      importer.mapper_class
     end
   end
 end
