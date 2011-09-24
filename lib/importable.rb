@@ -10,7 +10,6 @@ require "importable/imported_item_params_validator"
 require "importable/multi_step/import_helpers"
 require "importable/import_lifecycle"
 require "importable/validatable"
-require "importable/importer"
 
 module Importable
   class ParamRequiredError < StandardError; end

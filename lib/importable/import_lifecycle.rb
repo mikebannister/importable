@@ -8,6 +8,8 @@ module Importable
     included do
       delegate :invalid_items, :to => :mapper
 
+      include Validatable unless self.ancestors.include?(ActiveRecord::Base)
+
       validates_with Importable::ImportedItemParamsValidator
       validates_with Importable::ImportedItemsValidator, :if => :imported_items_ready?
     end

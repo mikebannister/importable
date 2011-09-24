@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 module Importable
-  class FooImporter < Importer
+  class FooImporter
+    include ImportLifecycle
+
     attr_accessor :object_type
 
     def rows 
