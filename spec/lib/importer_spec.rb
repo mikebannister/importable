@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module Importable
   class FooImporter
-    include ImportLifecycle
+    include Importer
 
     attr_accessor :object_type
 
@@ -11,7 +11,7 @@ module Importable
     end
   end
 
-  describe ImportLifecycle do
+  describe Importer do
     
     let(:data) do
       [

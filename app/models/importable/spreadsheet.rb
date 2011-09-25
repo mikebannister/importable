@@ -1,6 +1,6 @@
 module Importable
   class Spreadsheet < ActiveRecord::Base
-    include ImportLifecycle
+    include Importer
 
     delegate :first_row, :last_row, :sheets, :row, :to => :spreadsheet
 

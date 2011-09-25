@@ -1,5 +1,5 @@
 module Importable
-  module ImportLifecycle
+  module Importer
     include MultiStep::ImportHelpers
     extend ActiveSupport::Concern
 

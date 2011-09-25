@@ -27,23 +27,23 @@ You can use the included generator to copy the views if you'd like to customize 
 
     rails generate importable:views
 
-You can also create map specific views. This is especially useful if you want the form to provide extra info to the mapper. The generator can create these views for you if you pass the name of the mapper.
+You can also create mapper specific views. This is especially useful if you want the form to provide extra info to the mapper. The generator can create these views for you if you pass the name of the mapper.
 
     rails generate importable:view widgets
-
-Redirection after upload
-
-    TODO
 
 Write an import mapper
 
     TODO
 
-Import parameters
+Control redirection after upload
 
     TODO
 
-Use the provided UI to import data
+Accept extra attributes from the import form
+
+    TODO
+
+Start using the UI to import data
 
     TODO
 
