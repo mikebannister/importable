@@ -6,6 +6,7 @@ module Importable
       spreadsheet_file = support_file('foo_required_field_valid.xlsx')
       Spreadsheet.new(file: File.open(spreadsheet_file), mapper_name: 'foo_required_field')
     end
+
     let(:invalid_spreadsheet) do
       spreadsheet_file = support_file('foo_required_field_invalid.xlsx')
       Spreadsheet.new(file: File.open(spreadsheet_file), mapper_name: 'foo_required_field')
@@ -17,9 +18,9 @@ module Importable
 
     it "should generate a list of meaningful error messages" do
       invalid_spreadsheet.valid?
-      messages =  invalid_spreadsheet.errors.messages[:doof]
-      messages[0].should eq "can't be blank (line 3)"
-      messages[1].should eq "can't be blank (line 4)"
+      messages = invalid_spreadsheet.errors.messages[:doof]
+      messages.should include "can't be blank (line 3)"
+      messages.should include "can't be blank (line 4)"
     end
 
     it "should be valid if all underlying objects are valid" do

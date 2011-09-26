@@ -21,6 +21,14 @@ Spork.prefork do
     config.treat_symbols_as_metadata_keys_with_true_values = true
     config.filter_run :focus => true
     config.run_all_when_everything_filtered = true
+
+    config.before(:all) do
+      DeferredGarbageCollection.start
+    end
+
+    config.after(:all) do
+      DeferredGarbageCollection.reconsider
+    end
   end
 end
 
