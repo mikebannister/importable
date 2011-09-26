@@ -5,7 +5,7 @@ spec/dummy/db/*.sqlite3
 spec/dummy/log/*.log
 spec/dummy/tmp/
 uploads
-Sporkfile
+spec/Sporkfile
 db/*sqlite3
 
 # if tests fail just right this could get created and not deleted
