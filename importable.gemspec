@@ -29,7 +29,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "mocha", "~> 0.10.0"
   s.add_development_dependency "fakeweb", "~> 1.3.0"
   s.add_development_dependency "guard-rspec", "~> 0.4.5"
-  s.add_development_dependency "growl_notify", "~> 0.0.1"
   s.add_development_dependency "spork", "~> 0.9.0.rc"
   s.add_development_dependency "guard-spork", "~> 0.2.1"
 end
