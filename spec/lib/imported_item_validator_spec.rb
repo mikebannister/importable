@@ -4,11 +4,11 @@ module Importable
   describe ImportedItemsValidator do
     let(:valid_spreadsheet) do
       spreadsheet_file = support_file('foo_required_field_valid.xlsx')
-      Spreadsheet.new(file: File.open(spreadsheet_file), object_type: 'foo_required_field')
+      Spreadsheet.new(file: File.open(spreadsheet_file), mapper_name: 'foo_required_field')
     end
     let(:invalid_spreadsheet) do
       spreadsheet_file = support_file('foo_required_field_invalid.xlsx')
-      Spreadsheet.new(file: File.open(spreadsheet_file), object_type: 'foo_required_field')
+      Spreadsheet.new(file: File.open(spreadsheet_file), mapper_name: 'foo_required_field')
     end
 
     it "should be invalid if any underlying objects are invalid" do

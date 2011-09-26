@@ -7,7 +7,7 @@ module Importable
       Spreadsheet.new(
         import_params: { foo_id: 1 },
         file: File.open(spreadsheet_file),
-        object_type: 'foo_required_param'
+        mapper_name: 'foo_required_param'
       )
     end
 
@@ -15,7 +15,7 @@ module Importable
       spreadsheet_file = support_file('foo_single_worksheet.xlsx')
       Spreadsheet.new(
         file: File.open(spreadsheet_file),
-        object_type: 'foo_required_param'
+        mapper_name: 'foo_required_param'
       )
     end
 
@@ -23,7 +23,7 @@ module Importable
       spreadsheet_file = support_file('foo_single_worksheet.xlsx')
       Spreadsheet.new(
         file: File.open(spreadsheet_file),
-        object_type: 'foo_required_param',
+        mapper_name: 'foo_required_param',
         import_params: { foo_id: '' }
       )
     end

@@ -1,32 +1,25 @@
 module Importable
-  class SpreadsheetsController < ::ApplicationController
-    before_filter :require_type_param
-    before_filter :prepend_map_specific_view_path
-
-    def new
-      @spreadsheet = Spreadsheet.new
-    end
-
+  class SpreadsheetsController < ImporterController
     def create
-      init_spreadsheet!
-      init_import_params!
-      set_default_sheet!
+      init_spreadsheet
+      init_import_params
+      set_default_sheet
 
-      if @spreadsheet.valid?
-        set_current_step!
-        prepare_next_step!
+      if @importer.save
+        set_current_step
+        prepare_next_step
 
-        if @spreadsheet.last_step?
-          if import!
-            notice = if @spreadsheet.sheets.one?
+        if @importer.last_step?
+          if @importer.import!
+            notice = if @importer.sheets.one?
               "#{@type.humanize} spreadsheet was successfully imported."
             else
-              "#{@spreadsheet.default_sheet} worksheet of #{@type} spreadsheet was successfully imported."
+              "#{@importer.default_sheet} worksheet of #{@type} spreadsheet was successfully imported."
             end
             redirect_to return_url, notice: notice
             return
           end
-          @spreadsheet.previous_step
+          @importer.previous_step
         end
       end
 
@@ -34,22 +27,7 @@ module Importable
       render action: 'new'
     end
 
-    def show
-      @spreadsheet = Spreadsheet.find(params[:id])
-    end
-
     private
-
-    def return_url
-      index_path_sym = "#{@type.pluralize}_path".to_sym
-      if params[:return_to] == 'index' and self.respond_to?(index_path_sym)
-        main_app.foos_path
-      elsif params[:return_to] == 'import'
-        send(:new_spreadsheet_path, type: @type)
-      else
-        spreadsheet_path(id: @spreadsheet.id, type: @type)
-      end
-    end
 
     def import_template
       class_based_template if template_exists?(class_based_template)
@@ -59,55 +37,32 @@ module Importable
       File.join('importable/spreadsheets', @type.pluralize, params[:action])
     end
 
-    def init_spreadsheet!
-      @spreadsheet = begin
-        if params[:current_step] == 'upload_file'
-          Spreadsheet.new(file: params[:file], object_type: params[:type])
-        else
-          Spreadsheet.find(params[:spreadsheet_id])
-        end
+    def init_spreadsheet
+      @importer = if params[:current_step] == 'upload_file'
+        Spreadsheet.new(file: params[:file], mapper_name: params[:type])
+      else
+        Spreadsheet.find(params[:id])
       end
     end
 
-    def init_import_params!
-      @spreadsheet.import_params = params[:import_params] if params[:import_params]
+    def set_current_step
+      @importer.current_step = params[:current_step]
     end
 
-    def set_current_step!
-      @spreadsheet.current_step = params[:current_step]
-    end
-
-    def prepare_next_step!
-      if @spreadsheet.persisted? or @spreadsheet.save
-        if params[:back_button]
-          @spreadsheet.previous_step
-        else
-          @spreadsheet.next_step
-        end
-        params[:current_step] = @spreadsheet.current_step
+    def prepare_next_step
+      if params[:back_button]
+        @importer.previous_step
+      else
+        @importer.next_step
       end
+      params[:current_step] = @importer.current_step
     end
 
-    def import!
-      @spreadsheet.import!
-    end
-
-    def set_default_sheet!
+    def set_default_sheet
       if params[:default_sheet]
-        default_sheet = @spreadsheet.sheets[params[:default_sheet].to_i]
-        @spreadsheet.default_sheet = default_sheet
+        default_sheet = @importer.sheets[params[:default_sheet].to_i]
+        @importer.default_sheet = default_sheet
       end
-    end
-
-    def require_type_param
-      unless Spreadsheet.mapper_type_exists?(params[:type])
-        raise ParamRequiredError.new("#{params[:type]} import mapper does not exist")
-      end
-      @type = params[:type]
-    end
-    
-    def prepend_map_specific_view_path
-      prepend_view_path File.join(Rails.root, 'app/views', @type.pluralize)
     end
   end
 end

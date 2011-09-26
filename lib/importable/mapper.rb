@@ -45,7 +45,11 @@ module Importable
 
     def map_to_objects
       @data = @raw_data.flat_map do |raw_row|
-        row = Importable::Row.new(raw_row)
+        row = if raw_row.instance_of?(Hash)
+          Importable::Row.from_hash(raw_row)
+        else
+          Importable::Row.from_resource(raw_row)
+        end
         map_row(row)
       end
     end

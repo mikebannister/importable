@@ -4,7 +4,7 @@ feature "Import spreadsheet" do
   scenario "Import spreadsheet with a single worksheet" do
     spreadsheet_file = support_file('foo_single_worksheet.xlsx')
 
-    visit '/importable/foo'
+    visit '/import/foo/spreadsheet'
     attach_file("Choose foo spreadsheet file", spreadsheet_file)
     click_button "Upload"
     page.should have_content "Foo spreadsheet was successfully imported."
@@ -13,7 +13,7 @@ feature "Import spreadsheet" do
   scenario "Import spreadsheet with multiple worksheets" do
     spreadsheet_file = support_file('foo_multi_worksheet.xlsx')
 
-    visit '/importable/foo'
+    visit '/import/foo/spreadsheet'
     attach_file("Choose foo spreadsheet file", spreadsheet_file)
     click_button "Upload"
     page.should have_content "Choose worksheet"
@@ -25,7 +25,7 @@ feature "Import spreadsheet" do
   scenario "Import invalid spreadsheet" do
     spreadsheet_file = support_file('foo_required_field_invalid.xlsx')
 
-    visit '/importable/foo_required_field'
+    visit '/import/foo_required_field/spreadsheet'
     attach_file("Choose foo required field spreadsheet file", spreadsheet_file)
     click_button "Upload"
     page.should have_content "Doof can't be blank (line 3)"
@@ -34,7 +34,7 @@ feature "Import spreadsheet" do
   scenario "Import invalid multi worksheet spreadsheet" do
     spreadsheet_file = support_file('foo_multi_worksheet_required_field_invalid.xlsx')
 
-    visit '/importable/foo_required_field'
+    visit '/import/foo_required_field/spreadsheet'
     attach_file("Choose foo required field spreadsheet file", spreadsheet_file)
     click_button "Upload"
     page.should have_content "Choose worksheet"
@@ -45,7 +45,7 @@ feature "Import spreadsheet" do
   scenario "Import redirects to index page if requested" do
     spreadsheet_file = support_file('foo_multi_worksheet.xlsx')
 
-    visit '/importable/foo?return_to=index'
+    visit '/import/foo/spreadsheet?return_to=index'
     attach_file("Choose foo spreadsheet file", spreadsheet_file)
     click_button "Upload"
     page.should have_content "Choose worksheet"
@@ -57,7 +57,7 @@ feature "Import spreadsheet" do
   scenario "Import redirects back to the import page if requested" do
     spreadsheet_file = support_file('foo_multi_worksheet.xlsx')
 
-    visit '/importable/foo?return_to=import'
+    visit '/import/foo/spreadsheet?return_to=import'
     attach_file("Choose foo spreadsheet file", spreadsheet_file)
     click_button "Upload"
     page.should have_content "Choose worksheet"

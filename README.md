@@ -57,7 +57,6 @@ Moves strings to en.yaml
 DSL to make mappers cleaner
 Make database optional
 Add support for other file types that roo supports
-Set gem versions with ~>
 Back button specs
 Figure out how to allow overriding map specific templates in app/views/importable/spreadsheets/foos rather than app/views/foos/importable/spreadsheets
 Initializer for configuration, should allow setting the file upload path

@@ -1,7 +1,6 @@
 <div class="actions">
   <p>
     <%= hidden_field_tag :return_to, (params[:return_to] || :import) %>
-    <%= submit_tag label %>
-    <%= submit_tag "Back", :name => "back_button" unless @importer.first_step? %>
+    <%= submit_tag "Import" %>
   </p>
 </div>

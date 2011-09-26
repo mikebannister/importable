@@ -14,6 +14,8 @@ class CreateFoos < ActiveRecord::Migration
       t.integer :s
       t.integer :t
 
+      t.date :foobar_date
+
       t.timestamps
     end
   end

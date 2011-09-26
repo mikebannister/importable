@@ -7,7 +7,7 @@ module Importable
     end
 
     def store_dir
-      "#{Rails.root}/tmp/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.object_type}/#{model.id}"
+      "#{Rails.root}/tmp/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.mapper_name}/#{model.id}"
     end
   end
 end

@@ -14,17 +14,18 @@ Gem::Specification.new do |s|
   s.test_files = Dir["spec/**/*"]
 
   s.add_dependency "rails", "~> 3.1.0"
-  s.add_dependency "carrierwave"
-  # roo and it's dependencies (currently they aren't bundled automatically)
-  s.add_dependency 'roo'
-  s.add_dependency 'rubyzip2'
-  s.add_dependency 'spreadsheet'
-  s.add_dependency 'google-spreadsheet-ruby'
+  s.add_dependency "carrierwave", "~> 0.5.7"
+  # roo and it"s dependencies (currently they aren"t bundled automatically)
+  s.add_dependency "roo", "~> 1.9.7"
+  s.add_dependency "rubyzip2", "~> 2.0.1"
+  s.add_dependency "spreadsheet", "~> 0.6.5.9"
+  s.add_dependency "google-spreadsheet-ruby", "~> 0.1.5"
 
-  s.add_development_dependency "sqlite3"
-  s.add_development_dependency "rspec-rails"
-  s.add_development_dependency "capybara"
-  s.add_development_dependency "launchy"
-  s.add_development_dependency "spork"
-  s.add_development_dependency "mocha"
+  s.add_development_dependency "sqlite3", "~> 1.3.4"
+  s.add_development_dependency "rspec-rails", "~> 2.6.1"
+  s.add_development_dependency "capybara", "~> 1.1.1"
+  s.add_development_dependency "launchy", "~> 2.0.5"
+  s.add_development_dependency "spork", "~> 0.8.5"
+  s.add_development_dependency "mocha", "~> 0.10.0"
+  s.add_development_dependency "fakeweb", "~> 1.3.0"
 end

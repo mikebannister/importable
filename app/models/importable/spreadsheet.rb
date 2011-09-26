@@ -1,7 +1,5 @@
 module Importable
-  class Spreadsheet < ActiveRecord::Base
-    include Importer
-
+  class Spreadsheet < Importer
     delegate :first_row, :last_row, :sheets, :row, :to => :spreadsheet
 
     mount_uploader :file, Importable::Uploader

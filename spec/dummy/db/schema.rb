@@ -11,7 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110915001957) do
+ActiveRecord::Schema.define(:version => 20110925054334) do
+
+  create_table "foo_importers", :force => true do |t|
+    t.string   "type"
+    t.string   "mapper_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "foo_required_fields", :force => true do |t|
     t.integer  "moof"
@@ -31,15 +38,17 @@ ActiveRecord::Schema.define(:version => 20110915001957) do
     t.integer  "r"
     t.integer  "s"
     t.integer  "t"
+    t.date     "foobar_date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "importable_spreadsheets", :force => true do |t|
+  create_table "importable_importers", :force => true do |t|
     t.string   "file"
-    t.string   "object_type"
+    t.string   "mapper_name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "type"
   end
 
 end

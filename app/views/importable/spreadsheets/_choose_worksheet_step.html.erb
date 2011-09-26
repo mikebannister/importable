@@ -1,9 +1,9 @@
 <%= form_tag spreadsheets_path(type: @type) do %>
-  <%= render "errors" %>
+  <%= render "importable/errors" %>
 
   <h2>Choose worksheet</h2>
 
-  <% @spreadsheet.sheets.each_with_index do |sheet, index| %>
+  <% @importer.sheets.each_with_index do |sheet, index| %>
     <table>
       <tr>
         <td>
@@ -16,7 +16,7 @@
     </table>    
   <% end %>
 
-  <%= hidden_field_tag :spreadsheet_id, @spreadsheet.id %>
+  <%= hidden_field_tag :id, @importer.id %>
   <%= hidden_field_tag :current_step, 'choose_worksheet' %>
 
   <%= render "extras" %>

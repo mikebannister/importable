@@ -1,16 +1,18 @@
 Importable::Engine.routes.draw do
-  match "/:type",
-        to: 'spreadsheets#new',
-        as: 'new_spreadsheet',
-        via: 'get'
+  %w[ spreadsheet resource ].each do |import_type|
+    match "/:type/#{import_type}",
+          to: "#{import_type.pluralize}#new",
+          as: "new_#{import_type}",
+          via: "get"
 
-  match "/:type",
-        to: 'spreadsheets#create',
-        as: 'spreadsheets',
-        via: 'post'
+    match "/:type/#{import_type}",
+          to: "#{import_type.pluralize}#create",
+          as: "#{import_type.pluralize}",
+          via: "post"
 
-  match "/:type/:id",
-        to: 'spreadsheets#show',
-        as: 'spreadsheet',
-        via: 'get'
+    match "/:type/:id/#{import_type}",
+          to: "#{import_type.pluralize}#show",
+          as: "#{import_type}",
+          via: "get"
+  end
 end

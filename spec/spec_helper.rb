@@ -6,6 +6,7 @@ Spork.prefork do
   require File.expand_path("../dummy/config/environment.rb", __FILE__)
   require 'rspec/rails'
   require 'capybara/rspec'
+  require 'fakeweb'
 
   Rails.backtrace_cleaner.remove_silencers!
 
@@ -14,11 +15,7 @@ Spork.prefork do
 
   RSpec.configure do |config|
     config.mock_with :mocha
-    config.use_transactional_fixtures = false
-  end
-
-  def support_file(name)
-    File.expand_path("spec/support/#{name}")
+    config.use_transactional_fixtures = true
   end
 end
 
@@ -32,21 +29,57 @@ end
 
 # helpers
 
-def override_import_templates(model, &block)
-  # figure out paths
-  root_path = File.join(Rails.root, 'app/views', model)
-  template_root_path = File.join(root_path, 'importable/spreadsheets')
-  template_path = File.join(template_root_path, 'new.html.erb')
+def support_file(name)
+  File.expand_path("spec/support/#{name}")
+end
 
-  # make dirs and file
-  FileUtils.mkdir_p template_root_path
-  FileUtils.touch template_path
+def all_fake_resources
+  [
+    {
+      id: 1,
+      foo_date: '2010-04-14'
+    },
+    {
+      id: 2,
+      foo_date: '2010-04-15'
+    },
+    {
+      id: 3,
+      foo_date: '2010-04-16'
+    }
+  ]
+end
 
-  # add some content that we can check for
-  File.open(template_path, 'w') { |file| file.write("#{model} content") }
-  
-  yield
+def range_fake_resources
+  [
+    {
+      id: 1,
+      foo_date: '2010-04-14'
+    },
+    {
+      id: 2,
+      foo_date: '2010-04-15'
+    }
+  ]
+end
 
-  # cleanup
-  FileUtils.rm_rf root_path
+def single_fake_resource
+  {
+    id: 1,
+    foo_date: '2010-04-14'
+  }
+end
+
+def start_fake_foo_api!
+    FakeWeb.register_uri(:get,
+                         "http://fake-foo-api.dev/foos.json",
+                         :body => all_fake_resources.to_json)
+    FakeWeb.register_uri(:get,
+                         "http://fake-foo-api.dev/foos.json?end_date=2010-04-15&start_date=2010-04-14",
+                         :body => range_fake_resources.to_json)
+    FakeWeb.register_uri(:get,
+                         "http://fake-foo-api.dev/foos/1.json",
+                         :body => single_fake_resource.to_json)
+
+    FakeWeb.allow_net_connect = false
 end

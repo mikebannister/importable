@@ -7,3 +7,6 @@ spec/dummy/tmp/
 uploads
 Sporkfile
 db/*sqlite3
+
+# if tests fail just right this could get created and not deleted
+spec/dummy/app/views/moofs

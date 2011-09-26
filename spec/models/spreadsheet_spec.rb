@@ -4,17 +4,17 @@ module Importable
   describe Spreadsheet do
     let(:single_worksheet_spreadsheet) do
       spreadsheet_file = File.open support_file('foo_single_worksheet.xlsx')
-      Spreadsheet.new(object_type: 'foo', file: spreadsheet_file)
+      Spreadsheet.new(mapper_name: 'foo', file: spreadsheet_file)
     end
 
     let(:invalid_spreadsheet) do
       spreadsheet_file = File.open support_file('foo_required_field_invalid.xlsx')
-      Spreadsheet.new(object_type: 'foo_required_field', file: spreadsheet_file)
+      Spreadsheet.new(mapper_name: 'foo_required_field', file: spreadsheet_file)
     end
 
     let(:invalid_multi_spreadsheet) do
       spreadsheet_file = File.open support_file('foo_multi_worksheet_required_field_invalid.xlsx')
-      Spreadsheet.new(object_type: 'foo_required_field', file: spreadsheet_file)
+      Spreadsheet.new(mapper_name: 'foo_required_field', file: spreadsheet_file)
     end
 
     let(:multi_worksheet_spreadsheet) do
@@ -32,7 +32,7 @@ module Importable
     end
 
     it "should be invalid without a file" do
-      spreadsheet = Spreadsheet.new(object_type: 'foo')
+      spreadsheet = Spreadsheet.new(mapper_name: 'foo')
       spreadsheet.should_not be_valid
     end
 
@@ -48,13 +48,13 @@ module Importable
       spreadsheet_file = support_file('foo_single_worksheet.xlsx')
       Spreadsheet.new(
         import_params: { foo_id: 1 },
-        file: File.open(spreadsheet_file), object_type: 'foo_required_param'
+        file: File.open(spreadsheet_file), mapper_name: 'foo_required_param'
       )
     end
 
     let(:invalid_import_param_spreadsheet) do
       spreadsheet_file = support_file('foo_single_worksheet.xlsx')
-      Spreadsheet.new(file: File.open(spreadsheet_file), object_type: 'foo_required_param')
+      Spreadsheet.new(file: File.open(spreadsheet_file), mapper_name: 'foo_required_param')
     end
 
     it "should be valid if the required params are present" do
@@ -68,17 +68,6 @@ module Importable
     describe "#headers" do
       it "should return a list of header values" do
         single_worksheet_spreadsheet.headers.should eq %w[ a b c d ]
-      end
-    end
-
-    describe "#import!" do
-      it "should initialize a mapper to handle the actual importing" do
-        data = single_worksheet_spreadsheet.rows
-        mapper = FooMapper.new(data)
-
-        FooMapper.expects(:new).returns(mapper)
-
-        single_worksheet_spreadsheet.import!
       end
     end
 
@@ -146,57 +135,14 @@ module Importable
 
       it "should not care if the mappers have pluralization" do
         spreadsheet_file = File.open support_file('foo_single_worksheet.xlsx')
-        spreadsheet = Spreadsheet.new(object_type: 'singular_widgets', file: spreadsheet_file)
+        spreadsheet = Spreadsheet.new(mapper_name: 'singular_widgets', file: spreadsheet_file)
         spreadsheet.mapper_class.should eq SingularWidgetMapper
-        spreadsheet = Spreadsheet.new(object_type: 'singular_widget', file: spreadsheet_file)
+        spreadsheet = Spreadsheet.new(mapper_name: 'singular_widget', file: spreadsheet_file)
         spreadsheet.mapper_class.should eq SingularWidgetMapper
-        spreadsheet = Spreadsheet.new(object_type: 'plural_widgets', file: spreadsheet_file)
+        spreadsheet = Spreadsheet.new(mapper_name: 'plural_widgets', file: spreadsheet_file)
         spreadsheet.mapper_class.should eq PluralWidgetsMapper
-        spreadsheet = Spreadsheet.new(object_type: 'plural_widget', file: spreadsheet_file)
+        spreadsheet = Spreadsheet.new(mapper_name: 'plural_widget', file: spreadsheet_file)
         spreadsheet.mapper_class.should eq PluralWidgetsMapper
-      end
-    end
-
-    describe "#mapper" do
-      it "should return the mapper instance for the spreadsheet" do
-        mapper = single_worksheet_spreadsheet.mapper
-        mapper.should be_a FooMapper
-      end
-    end
-
-    describe "self#mapper_files" do
-      it "should list the available mapper files" do
-        Spreadsheet.mapper_files[0].ends_with?('foo_mapper.rb').should be_true
-        Spreadsheet.mapper_files[1].ends_with?('foo_required_field_mapper.rb').should be_true
-      end
-    end
-
-    describe "self#mapper_types" do
-      it "should list the available mapper types" do
-        Spreadsheet.mapper_types[0].should eq 'foo'
-        Spreadsheet.mapper_types[1].should eq 'foo_required_field'
-      end
-    end
-
-    describe "self#mapper_type_exists?" do
-      it "should return true if the supplied mapper type exists" do
-        Spreadsheet.mapper_type_exists?('foo').should be_true
-        Spreadsheet.mapper_type_exists?('foo_required_field').should be_true
-      end
-
-      it "should return false if the supplied mapper type doesn't exist" do
-        Spreadsheet.mapper_type_exists?('bar').should be_false
-        Spreadsheet.mapper_type_exists?('').should be_false
-        Spreadsheet.mapper_type_exists?(nil).should be_false
-      end
-
-      it "should not care about pluralization" do
-        Spreadsheet.mapper_type_exists?('singular_widget').should be_true
-        Spreadsheet.mapper_type_exists?('singular_widgets').should be_true
-        Spreadsheet.mapper_type_exists?('plural_widget').should be_true
-        Spreadsheet.mapper_type_exists?('plural_widgets').should be_true
-        Spreadsheet.mapper_type_exists?('foos').should be_true
-        Spreadsheet.mapper_type_exists?('foo_required_fields').should be_true
       end
     end
   end

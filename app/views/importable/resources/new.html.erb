@@ -1,0 +1,6 @@
+<h1><%= @type.humanize %> resource import</h1>
+
+<%= form_tag resources_path(type: @type) do %>
+  <%= render "importable/errors" %>
+  <%= render "actions" %>
+<% end %>
