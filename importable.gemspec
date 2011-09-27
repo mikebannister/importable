@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 3.1.0"
   s.add_dependency "carrierwave", "~> 0.5.7"
-  # roo and it"s dependencies (currently they aren"t bundled automatically)
+  # roo + dependencies (not bundled automatically)
   s.add_dependency "roo", "~> 1.9.7"
   s.add_dependency "rubyzip2", "~> 2.0.1"
   s.add_dependency "spreadsheet", "~> 0.6.5.9"

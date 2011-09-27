@@ -61,3 +61,4 @@ Back button specs
 Figure out how to allow overriding map specific templates in app/views/importable/spreadsheets/foos rather than app/views/foos/importable/spreadsheets
 Initializer for configuration, should allow setting the file upload path
 Underscored attribute aliases to incoming names with spaces
+Allow views to be in a directories named 'import', possibly whatever the engine is mounted as
