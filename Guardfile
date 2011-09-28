@@ -1,15 +1,6 @@
 # A sample Guardfile
 # More info at https://github.com/guard/guard#readme
 
-guard 'spork', :cucumber_env => { 'RAILS_ENV' => 'test' }, :rspec_env => { 'RAILS_ENV' => 'test' } do
-  watch('spec/dummy/config/application.rb')
-  watch('spec/dummy/config/environment.rb')
-  watch(%r{^spec/dummy/config/environments/.+\.rb$})
-  watch(%r{^spec/dummy/config/initializers/.+\.rb$})
-  watch('spec/spec_helper.rb')
-  watch('spec/Sporkfile')
-end
-
 guard 'rspec', :version => 2, :cli => "--drb", :all_on_start => false, :all_after_pass => false do
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
