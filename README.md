@@ -1,6 +1,6 @@
 # Importable #
 
-An engine for importing spreadsheets (or `ActiveResource`s) into a Rails app, easily.
+An engine for importing spreadsheets (or `ActiveResources`) into a Rails app, easily.
 
 ## Synopsis ##
 
@@ -51,7 +51,7 @@ Testing import mappers
 
     TODO
 
-Working with `ActiveResource`s
+Working with `ActiveResources`
 
     TODO
 
