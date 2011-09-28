@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Importable do
   describe "#rows" do
     it "should return a list of resources" do
-      start_fake_foo_api!
+      start_fake_foo_api
 
       rows = Importable::Resource.new(mapper_name: 'foo_resource').rows
       rows.should have_exactly(3).items

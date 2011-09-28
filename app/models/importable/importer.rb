@@ -30,7 +30,6 @@ module Importable
     end
     
     def imported_items_ready?
-      # TODO--see if this can be pushed down into Spreadsheet subclass
       true
     end
 

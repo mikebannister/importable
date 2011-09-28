@@ -35,7 +35,7 @@ module Importable
     
     describe "self#from_resource" do
       it "builds a row from the resource's attributes" do
-        start_fake_foo_api!
+        start_fake_foo_api
 
         resource = FooResource.find(1)
 

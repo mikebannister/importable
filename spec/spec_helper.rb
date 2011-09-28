@@ -83,7 +83,7 @@ def single_fake_resource
   }
 end
 
-def start_fake_foo_api!
+def start_fake_foo_api
     FakeWeb.register_uri(:get,
                          "http://fake-foo-api.dev/foos.json",
                          :body => all_fake_resources.to_json)

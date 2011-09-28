@@ -62,3 +62,4 @@ Figure out how to allow overriding map specific templates in app/views/importabl
 Initializer for configuration, should allow setting the file upload path
 Underscored attribute aliases to incoming names with spaces
 Allow views to be in a directories named 'import', possibly whatever the engine is mounted as
+Importer#imported_items_ready? smells funny

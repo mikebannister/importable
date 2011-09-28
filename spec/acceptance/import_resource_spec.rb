@@ -2,7 +2,7 @@ require 'spec_helper'
 
 feature "Import resource" do
   background do
-    start_fake_foo_api!
+    start_fake_foo_api
   end
 
   scenario "Import a resource" do
