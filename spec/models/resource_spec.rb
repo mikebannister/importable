@@ -42,11 +42,20 @@ describe Importable do
       Importable::Resource.new(mapper_name: 'foo_resource', import_params: import_params).rows
     end
   end
-  
+
   describe "#resource_class" do
     it "returns the associated resource class" do
       resource_class = Importable::Resource.new(mapper_name: 'foo_resource').resource_class
       resource_class.should eq FooResource
+    end
+
+    it "returns the associated resource class with module name indicated by dash in the mapper name" do
+      module MoofModule
+        class MoofClass
+        end
+      end
+      resource_class = Importable::Resource.new(mapper_name: 'moof_module-moof_class').resource_class
+      resource_class.should eq MoofModule::MoofClass
     end
   end
 end

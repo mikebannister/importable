@@ -12,7 +12,7 @@ module Importable
     end
 
     def resource_class
-      mapper_name.camelize.constantize
+      mapper_name.sub('-', '/').camelize.constantize
     end
   end
 end
