@@ -51,19 +51,6 @@ def all_fake_resources
   ]
 end
 
-def range_fake_resources
-  [
-    {
-      id: 1,
-      foo_date: '2010-04-14'
-    },
-    {
-      id: 2,
-      foo_date: '2010-04-15'
-    }
-  ]
-end
-
 def single_fake_resource
   {
     id: 1,
@@ -71,16 +58,18 @@ def single_fake_resource
   }
 end
 
-def start_fake_foo_api
-    FakeWeb.register_uri(:get,
-                         "http://fake-foo-api.dev/foos.json",
-                         :body => all_fake_resources.to_json)
-    FakeWeb.register_uri(:get,
-                         "http://fake-foo-api.dev/foos.json?end_date=2010-04-15&start_date=2010-04-14",
-                         :body => range_fake_resources.to_json)
-    FakeWeb.register_uri(:get,
-                         "http://fake-foo-api.dev/foos/1.json",
-                         :body => single_fake_resource.to_json)
+def with_fake_foo_api
+  FakeWeb.register_uri(:get,
+                       "http://fake-foo-api.dev/foos.json",
+                       :body => all_fake_resources.to_json)
+  FakeWeb.register_uri(:get,
+                       "http://fake-foo-api.dev/foos/1.json",
+                       :body => single_fake_resource.to_json)
 
-    FakeWeb.allow_net_connect = false
+  FakeWeb.allow_net_connect = false
+
+  yield
+
+  FakeWeb.allow_net_connect = true
+  FakeWeb.clean_registry
 end

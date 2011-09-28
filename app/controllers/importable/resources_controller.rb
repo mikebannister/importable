@@ -14,9 +14,13 @@ module Importable
     end
 
     private
-    
+
     def init_resource
-      @importer = Importable::Resource.new(mapper_name: params[:type])
+      resource_attributes = {
+        mapper_name: params[:type],
+        import_params: params[:import_params]
+      }
+      @importer = Importable::Resource.new(resource_attributes)
     end
   end
 end

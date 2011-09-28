@@ -35,12 +35,12 @@ module Importable
     
     describe "self#from_resource" do
       it "builds a row from the resource's attributes" do
-        start_fake_foo_api
+        with_fake_foo_api do
+          resource = FooResource.find(1)
 
-        resource = FooResource.find(1)
-
-        row = Importable::Row.from_resource(resource)
-        row.keys.should eq [:id, :foo_date]
+          row = Importable::Row.from_resource(resource)
+          row.keys.should eq [:id, :foo_date]
+        end
       end
     end
 

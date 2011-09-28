@@ -2,7 +2,7 @@ module Importable
   class Importer < ActiveRecord::Base
     include MultiStep::ImportHelpers
 
-    attr_accessor :import_params
+    attr_writer :import_params
     delegate :invalid_items, :to => :mapper
 
     validates_with Importable::ImportedItemParamsValidator
@@ -11,6 +11,10 @@ module Importable
     def import!
       #TODO: help
       mapper.valid?
+    end
+
+    def import_params
+      @import_params || {}
     end
 
     def mapper
