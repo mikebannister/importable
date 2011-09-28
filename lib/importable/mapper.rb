@@ -2,12 +2,12 @@ module Importable
   class Mapper
     attr_accessor :data
     attr_accessor :invalid_items
-  
+
     def initialize(data, params={})
       @params = params
       @raw_data = data
       @invalid_items = []
-    
+
       before_mapping
       map_to_objects
       after_mapping
@@ -26,6 +26,25 @@ module Importable
 
       def required_params
         @required_params || []
+      end
+
+      def mapper_root
+        "#{Rails.root}/app/imports"
+      end
+
+      def mapper_types
+        Dir["#{mapper_root}/**/*.rb"].map do |file|
+          offset = mapper_root.length + 1
+          file.slice(offset..-11)
+        end.sort
+      end
+
+      def mapper_type_exists?(type)
+        type = type.try(:sub, '-', '/')
+
+        mapper_types.flat_map do |t|
+          [ t.pluralize, t.singularize ]
+        end.include?(type)
       end
     end
 
@@ -53,16 +72,16 @@ module Importable
         map_row(row)
       end
     end
-  
+
     def save_items
       if valid?
-        @data.each { |object| object.save! if object.new_record? } 
+        @data.each { |object| object.save! if object.new_record? }
       end
     end
 
     def validate_items
       @data.each_with_index do |object, index|
-        line_number = (index + 2)
+        line_number = index + 2
         @invalid_items << [object, line_number] unless object.valid?
       end
     end

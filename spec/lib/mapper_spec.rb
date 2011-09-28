@@ -3,18 +3,18 @@ require 'spec_helper'
 class FooMultiObjectMapper < Importable::Mapper
   attr_accessor :before_callback_called
   attr_accessor :after_callback_called
-  
+
   def map_row(row)
     [
       Foo.create!(row),
       Foo.create!(row)
     ]
   end
-  
+
   def before_mapping
     @before_callback_called = true
   end
-  
+
   def after_mapping
     @before_callback_called = true
   end
@@ -61,11 +61,11 @@ module Importable
 
     it "should call the before mapping callback" do
       FooMultiObjectMapper.any_instance.expects(:before_mapping)
-      
+
       mapper = FooMultiObjectMapper.new(data)
       mapper.before_callback_called.should be_true
     end
-    
+
     it "should call the after mapping callback" do
       FooMultiObjectMapper.any_instance.expects(:after_mapping)
 
@@ -91,11 +91,54 @@ module Importable
         mapper.should_not be_valid
       end
     end
-    
+
     describe "#method_missing" do
       it "should expose import params as attributes" do
         mapper = FooRequiredParamMapper.new(data, { foo_id: 1 })
         mapper.foo_id.should eq 1
+      end
+    end
+
+    describe "self#mapper_types" do
+      it "should list the available mapper files" do
+        Mapper.mapper_types[0].should eq 'bar/moof'
+        Mapper.mapper_types[1].should eq 'foo'
+        Mapper.mapper_types[2].should eq 'foo_required_field'
+        Mapper.mapper_types[3].should eq 'foo_required_param'
+        Mapper.mapper_types[4].should eq 'foo_required_param_and_field'
+        Mapper.mapper_types[5].should eq 'foo_required_param_resource'
+        Mapper.mapper_types[6].should eq 'foo_resource'
+        Mapper.mapper_types[7].should eq 'moof'
+        Mapper.mapper_types[8].should eq 'plural_widgets'
+        Mapper.mapper_types[9].should eq 'singular_widget'
+
+        Mapper.mapper_types.should have_exactly(10).items
+      end
+    end
+
+    describe "self#mapper_type_exists?" do
+      it "should return true if the supplied mapper type exists" do
+        Mapper.mapper_type_exists?('foo').should be_true
+        Mapper.mapper_type_exists?('foo_required_field').should be_true
+      end
+
+      it "should return false if the supplied mapper type doesn't exist" do
+        Mapper.mapper_type_exists?('bar').should be_false
+        Mapper.mapper_type_exists?('').should be_false
+        Mapper.mapper_type_exists?(nil).should be_false
+      end
+
+      it "should be module friendly with a dash denoting a module" do
+        Mapper.mapper_type_exists?('bar-moof').should be_true
+      end
+
+      it "should not care about pluralization" do
+        Mapper.mapper_type_exists?('singular_widget').should be_true
+        Mapper.mapper_type_exists?('singular_widgets').should be_true
+        Mapper.mapper_type_exists?('plural_widget').should be_true
+        Mapper.mapper_type_exists?('plural_widgets').should be_true
+        Mapper.mapper_type_exists?('foos').should be_true
+        Mapper.mapper_type_exists?('foo_required_fields').should be_true
       end
     end
   end

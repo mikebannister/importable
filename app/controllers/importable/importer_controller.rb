@@ -20,7 +20,7 @@ module Importable
     end
 
     def require_type_param
-      unless Importer.mapper_type_exists?(params[:type])
+      unless Mapper.mapper_type_exists?(params[:type])
         raise ParamRequiredError.new("#{params[:type]} import mapper does not exist")
       end
       @type = params[:type]

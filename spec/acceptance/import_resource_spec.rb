@@ -9,4 +9,9 @@ feature "Import resource" do
       page.should have_content "Foo resource was successfully imported."
     end
   end
+
+  scenario "Import with missing parameters" do
+    visit '/import/foo_required_param_resource/resource'
+    click_on "Import"
+  end
 end

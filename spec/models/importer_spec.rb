@@ -67,6 +67,12 @@ describe Importable do
       mapper_class.should eq FooRequiredFieldMapper
     end
   
+    it "should return the mapper class for importer with module name indicated by dash in the mapper name" do
+      importer.mapper_name = 'bar-moof'
+      mapper_class = importer.mapper_class
+      mapper_class.should eq Bar::MoofMapper
+    end
+  
     it "should not care if the mappers have pluralization" do
       importer.mapper_name = 'singular_widgets'
       importer.mapper_class.should eq SingularWidgetMapper
@@ -86,42 +92,6 @@ describe Importable do
     it "should return the mapper instance for the spreadsheet" do
       importer.mapper_name = 'foo'
       importer.mapper.should be_a FooMapper
-    end
-  end
-  
-  describe "self#mapper_files" do
-    it "should list the available mapper files" do
-      FooImporter.mapper_files[0].ends_with?('foo_mapper.rb').should be_true
-      FooImporter.mapper_files[1].ends_with?('foo_required_field_mapper.rb').should be_true
-    end
-  end
-  
-  describe "self#mapper_types" do
-    it "should list the available mapper types" do
-      FooImporter.mapper_types[0].should eq 'foo'
-      FooImporter.mapper_types[1].should eq 'foo_required_field'
-    end
-  end
-  
-  describe "self#mapper_type_exists?" do
-    it "should return true if the supplied mapper type exists" do
-      FooImporter.mapper_type_exists?('foo').should be_true
-      FooImporter.mapper_type_exists?('foo_required_field').should be_true
-    end
-  
-    it "should return false if the supplied mapper type doesn't exist" do
-      FooImporter.mapper_type_exists?('bar').should be_false
-      FooImporter.mapper_type_exists?('').should be_false
-      FooImporter.mapper_type_exists?(nil).should be_false
-    end
-  
-    it "should not care about pluralization" do
-      FooImporter.mapper_type_exists?('singular_widget').should be_true
-      FooImporter.mapper_type_exists?('singular_widgets').should be_true
-      FooImporter.mapper_type_exists?('plural_widget').should be_true
-      FooImporter.mapper_type_exists?('plural_widgets').should be_true
-      FooImporter.mapper_type_exists?('foos').should be_true
-      FooImporter.mapper_type_exists?('foo_required_fields').should be_true
     end
   end
 end

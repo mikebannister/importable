@@ -26,36 +26,19 @@ module Importable
     end
 
     def singular_mapper_class
-      "#{mapper_name.singularize}_mapper".camelize.constantize rescue nil
+      "#{mapper_name_with_module.singularize}_mapper".camelize.constantize rescue nil
     end
 
     def plural_mapper_class
-      "#{mapper_name.pluralize}_mapper".camelize.constantize rescue nil
+      "#{mapper_name_with_module.pluralize}_mapper".camelize.constantize rescue nil
     end
-    
+
+    def mapper_name_with_module
+      mapper_name.sub('-', '/')
+    end
+
     def imported_items_ready?
       true
-    end
-
-    class << self
-
-      def mapper_files
-        Dir["#{Rails.root}/app/imports/**.rb"].sort
-      end
-
-      def mapper_types
-        mapper_files.map do |mapper_file|
-          file_name = File.basename(mapper_file, '.rb')
-          mapper_name = file_name.slice(0..-8) if file_name.ends_with?('_mapper')
-          mapper_name.try(:singularize)
-        end.compact
-      end
-
-      def mapper_type_exists?(type)
-        mapper_types.flat_map do |t|
-          [ t.pluralize, t.singularize ]
-        end.include?(type)
-      end
     end
   end
 end
