@@ -1,6 +1,6 @@
 # Importable #
 
-Import spreadsheets and map data to rails models, easily.
+An engine for importing spreadsheets (or `ActiveResource`s) into a Rails app, easily.
 
 ## Synopsis ##
 
@@ -48,6 +48,10 @@ Start using the UI to import data
     TODO
 
 Testing import mappers
+
+    TODO
+
+Working with `ActiveResource`s
 
     TODO
 

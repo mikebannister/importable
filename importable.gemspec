@@ -7,8 +7,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Mike Bannister"]
   s.email       = ["mikebannister@gmail.com"]
   s.homepage    = "https://github.com/mikebannister/importable"
-  s.summary     = "Import spreadsheets and map data to rails models, easily."
-  s.description = "Import spreadsheets and map data to rails models, easily."
+  s.summary     = "An engine for importing spreadsheets (or ActiveResources) into a Rails app, easily."
+  s.description = "An engine for importing spreadsheets (or `ActiveResource`s) into a Rails app, easily."
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["spec/**/*"]
