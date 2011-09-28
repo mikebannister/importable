@@ -9,10 +9,10 @@ Example:
     This will create:
         app/views/importable
         app/views/importable/_errors.html.erb
+        app/views/importable/_extras.html.erb
         app/views/importable/spreadsheets
         app/views/importable/spreadsheets/_actions.html.erb
         app/views/importable/spreadsheets/_choose_worksheet_step.html.erb
-        app/views/importable/spreadsheets/_extras.html.erb
         app/views/importable/spreadsheets/_upload_file_step.html.erb
         app/views/importable/spreadsheets/new.html.erb
         app/views/importable/spreadsheets/show.html.erb
@@ -26,10 +26,10 @@ Example:
     This will create:
         app/views/foos/importable
         app/views/foos/importable/_errors.html.erb
+        app/views/foos/importable/_extras.html.erb
         app/views/foos/importable/spreadsheets
         app/views/foos/importable/spreadsheets/_actions.html.erb
         app/views/foos/importable/spreadsheets/_choose_worksheet_step.html.erb
-        app/views/foos/importable/spreadsheets/_extras.html.erb
         app/views/foos/importable/spreadsheets/_upload_file_step.html.erb
         app/views/foos/importable/spreadsheets/new.html.erb
         app/views/foos/importable/spreadsheets/show.html.erb

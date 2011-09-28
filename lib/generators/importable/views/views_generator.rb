@@ -7,9 +7,9 @@ module Importable
 
       files = %w[
         _errors
+        _extras
         spreadsheets/_actions
         spreadsheets/_choose_worksheet_step
-        spreadsheets/_extras
         spreadsheets/_upload_file_step
         spreadsheets/new
         spreadsheets/show

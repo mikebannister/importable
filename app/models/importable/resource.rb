@@ -2,17 +2,15 @@ module Importable
   class Resource < Importer
     def rows
       method = import_params.delete('method')
-      request_params = { params: import_params }
-
       if method
-        resource_class.get(method.to_sym, request_params)
+        resource_class.get(method.to_sym, import_params)
       else
-        resource_class.all(request_params)
+        resource_class.all(params: import_params)
       end
     end
 
     def resource_class
-      mapper_name.sub('-', '/').camelize.constantize
+      mapper_name_with_module.camelize.constantize
     end
   end
 end

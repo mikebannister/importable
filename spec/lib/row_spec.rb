@@ -10,7 +10,7 @@ module Importable
       })
       row.keys.should eq [:a, :b, :c]
     end
-    
+
     it "should export keys via attributes" do
       row = Importable::Row.new({
         moof: 1,
@@ -32,15 +32,13 @@ module Importable
       row.doof.should eq 2
       row.foof.should eq 3
     end
-    
+
     describe "self#from_resource" do
       it "builds a row from the resource's attributes" do
-        with_fake_foo_api do
-          resource = FooResource.find(1)
+        resource = FooResource.find(1)
 
-          row = Importable::Row.from_resource(resource)
-          row.keys.should eq [:id, :foo_date]
-        end
+        row = Importable::Row.from_resource(resource)
+        row.keys.should include(:created_at, :foo_date, :id, :updated_at)
       end
     end
 

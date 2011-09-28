@@ -3,7 +3,6 @@ module Importable
     include MultiStep::ImportHelpers
 
     attr_writer :import_params
-    delegate :invalid_items, :to => :mapper
 
     validates_with Importable::ImportedItemParamsValidator
     validates_with Importable::ImportedItemsValidator, :if => :imported_items_ready?
@@ -19,6 +18,10 @@ module Importable
 
     def mapper
       @mapper ||= mapper_class.new(rows, import_params)
+    end
+
+    def invalid_items
+      mapper.invalid_items
     end
 
     def mapper_class

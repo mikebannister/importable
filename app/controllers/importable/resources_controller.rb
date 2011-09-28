@@ -5,10 +5,11 @@ module Importable
       init_import_params
 
       if @importer.save and @importer.import!
-        redirect_to return_url, notice: "#{@type.humanize} was successfully imported."
+        importer_type = @type.sub('-', ' ').humanize
+        redirect_to return_url, notice: "#{importer_type} was successfully imported."
         return
       end
-      
+
       # if not redirected
       render action: 'new'
     end

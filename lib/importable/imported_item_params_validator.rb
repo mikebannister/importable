@@ -8,7 +8,7 @@ module Importable
         importer.errors[:base] << required[:message] if import_params[required[:name]].blank?
       end
     end
-    
+
     private
 
     def import_params

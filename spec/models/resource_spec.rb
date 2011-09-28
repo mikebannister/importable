@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Importable do
+describe Importable::Resource do
   describe "#rows" do
     it "should call the all method on the underlying resource" do
       FooResource.expects(:all).with(params: {})
@@ -21,25 +21,21 @@ describe Importable do
     end
 
     it "should use params[:import_params][:method] to call a custom REST method on the underlying resource" do
-      import_params = {
-        'method' => 'bars'
-      }
-      FooResource.expects(:get).with(:bars, params: {})
+      import_params = { 'method' => 'top_five' }
+
+      FooResource.expects(:get).with(:top_five, {})
 
       Importable::Resource.new(mapper_name: 'foo_resource', import_params: import_params).rows
     end
 
-    it "should use params[:import_params] as params to the api method" do
-      import_params = {
-        'method' => 'bars',
-        'start_date' => '2010-04-14',
-        'end_date' => '2010-04-15'
-      }
-      request_params = {'start_date' => '2010-04-14', 'end_date' => '2010-04-15'}
+    it "should use params[:import_params] as params for custom REST method" do
+      request_params = { 'order' => 'asc' }
+      import_params = { 'method' => 'top_five' }
+      all_params = import_params.merge(request_params)
 
-      FooResource.expects(:get).with(:bars, params: request_params)
+      FooResource.expects(:get).with(:top_five, request_params)
 
-      Importable::Resource.new(mapper_name: 'foo_resource', import_params: import_params).rows
+      Importable::Resource.new(mapper_name: 'foo_resource', import_params: all_params).rows
     end
   end
 

@@ -6,7 +6,7 @@ module Importable
     def new
       @importer = importer_class.new(mapper_name: @type)
     end
-  
+
     def show
       @importer = importer_class.find(params[:id])
     end
@@ -27,9 +27,13 @@ module Importable
     end
 
     def prepend_map_specific_view_path
-      prepend_view_path File.join(Rails.root, 'app/views', @type.pluralize)
+      prepend_view_path map_specific_path
     end
-    
+
+    def map_specific_path
+      File.join(Rails.root, 'app/views', @type.pluralize.sub('-', '/'))
+    end
+
     def init_import_params
       @importer.import_params = params[:import_params] if params[:import_params]
     end
@@ -42,7 +46,7 @@ module Importable
         main_app.send(index_path_sym)
       elsif params[:return_to] == 'import'
         new_importable_path = "new_#{controller_name.singularize}_path".to_sym
-        send(new_importable_path, type: @type)
+        send(new_importable_path, type: @type, import_params: @importer.import_params)
       else
         importable_path = "#{controller_name.singularize}_path".to_sym
         send(importable_path, id: @importer.id, type: @type)
