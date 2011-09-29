@@ -4,7 +4,7 @@ An engine for importing spreadsheets (or `ActiveResources`) into a Rails app, ea
 
 ## Synopsis ##
 
-Provides models and a UI for creating and maintaining string pairs. A tiny DSL is included so developers to easily make use of the generated data. The UI allows system administrators to create groups of string pairs that can be maintained by non-technical people.
+  TODO
 
 Add it to your `Gemfile`
 
