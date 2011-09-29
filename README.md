@@ -6,6 +6,8 @@ An engine for importing spreadsheets (or `ActiveResources`) into a Rails app, ea
 
   TODO
 
+## Usage ##
+
 Add it to your `Gemfile`
 
     gem 'importable'
