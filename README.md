@@ -59,13 +59,15 @@ Working with `ActiveResources`
 
 ## TODO ##
 
+Resources have some flash on success functionally that spreadsheets don't
+
 Moves strings to en.yaml
 
 DSL to make mappers cleaner
 
 Make database optional
 
-Add support for other file types that roo supports
+Add support for other file types that roo can give us for free
 
 Back button specs
 

@@ -1,11 +1,13 @@
 module Importable
   class ResourcesController < ImporterController
     def create
+      started_at = Time.now
+
       init_resource
       init_import_params
 
       if @importer.save and @importer.import!
-        redirect_to return_url, notice: return_notice
+        redirect_to return_url, notice: return_notice, flash: { start: started_at.to_f, end: Time.now.to_f }
         return
       end
 

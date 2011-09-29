@@ -5,3 +5,9 @@
   <%= render "importable/extras" %>
   <%= render "actions" %>
 <% end %>
+
+<% if flash[:start] and flash[:end] %>
+  <p>
+    <em><%= distance_of_time_in_words flash[:start].to_f, flash[:end].to_f, include_seconds = true %></em>
+  </p>
+<% end %>

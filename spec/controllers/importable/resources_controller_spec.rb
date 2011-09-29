@@ -12,6 +12,13 @@ module Importable
         flash[:notice].should eq "2 Foo resources were successfully imported."
       end
 
+      it "generate a 'start/end' flash keys for profiling" do
+        import_params = { 'start_date' => '2010-04-14', 'end_date' => '2010-04-15' }
+        post :create, type: 'foo_resource', import_params: import_params, :use_route => :importable
+
+        (flash[:end].to_f - flash[:start].to_f).should be > 0
+      end
+
       describe "#init_resource" do
         before(:each) do
           @resource_importer = FooImporter.create!(mapper_name: 'foo')
