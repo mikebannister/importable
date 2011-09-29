@@ -6,6 +6,6 @@ feature "Import resource" do
   scenario "Import a resource" do
     visit '/import/foo_resource/resource'
     click_on "Import"
-    page.should have_content "Foo resource was successfully imported."
+    page.should have_content "17 Foo resources were successfully imported."
   end
 end

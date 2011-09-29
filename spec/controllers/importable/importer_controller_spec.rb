@@ -37,29 +37,29 @@ module Importable
         end
       end
     end
-    
+
     describe "GET new" do
       it "should assign a new importer as @importer" do
         get :new, type: 'foo', :use_route => :importable
         assigns(:importer).should be_a FooImporter
       end
-    
+
       it "should assign the importer's type as @type" do
         get :new, type: 'foo', :use_route => :importable
         assigns(:type).should eq 'foo'
       end
-    
+
       it "should raise a params exception if the mapper type is not valid" do
         expect {
           get :new, type: 'bar', :use_route => :importable
         }.to raise_error(ParamRequiredError, 'bar import mapper does not exist')
       end
-    
+
       it "should use the base import template by default" do
         get :new, type: 'foo', :use_route => :importable
         response.should render_template("importable/foo_importer/new")
       end
-    
+
       describe "with rendered views" do
         render_views
         it "should use the mapper specific template if it exists" do
@@ -75,12 +75,12 @@ module Importable
           post :create, type: 'foo', id: importer.id, :use_route => :importable
           response.should redirect_to("/fake_foo_importer_path")
         end
-        
+
         it "should redirect to the object type's index view if import is successful and params[:return_to] is set to index" do
           post :create, type: 'foo', id: importer.id, return_to: 'index', :use_route => :importable
           response.should redirect_to("/foos")
         end
-        
+
         it "should redirect back to the import view if import is successful and params[:return_to] is set to import" do
           post :create, type: 'foo', id: importer.id, return_to: 'import', :use_route => :importable
           response.should redirect_to("/fake_new_foo_importer_path")

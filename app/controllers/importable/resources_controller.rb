@@ -5,8 +5,7 @@ module Importable
       init_import_params
 
       if @importer.save and @importer.import!
-        importer_type = @type.sub('-', ' ').humanize
-        redirect_to return_url, notice: "#{importer_type} was successfully imported."
+        redirect_to return_url, notice: return_notice
         return
       end
 
@@ -15,6 +14,14 @@ module Importable
     end
 
     private
+
+    def return_notice
+      "#{@importer.mapper.data.count} #{importer_type.pluralize} were successfully imported."
+    end
+
+    def importer_type
+      @type.sub('-', ' ').humanize
+    end
 
     def init_resource
       resource_attributes = {
