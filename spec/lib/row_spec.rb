@@ -34,7 +34,9 @@ module Importable
     end
 
     describe "self#from_resource" do
+      use_vcr_cassette "foo_api", :record => :new_episodes
       it "builds a row from the resource's attributes" do
+
         resource = FooResource.find(1)
 
         row = Importable::Row.from_resource(resource)

@@ -1,0 +1,55 @@
+---
+- !ruby/struct:VCR::HTTPInteraction
+  request: !ruby/struct:VCR::Request
+    method: :get
+    uri: http://fake-foo-api.dev:80/foos.json
+    body: !!null 
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response: !ruby/struct:VCR::Response
+    status: !ruby/struct:VCR::ResponseStatus
+      code: 200
+      message: OK
+    headers:
+      content-type:
+      - application/json; charset=utf-8
+      x-ua-compatible:
+      - IE=Edge
+      etag:
+      - ! '"a8475ec4ef869c0b631976f9d5c5323c"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-runtime:
+      - '0.030654'
+    body: ! '[{"created_at":"2011-09-28T18:54:40Z","foo_date":"2010-04-14","id":1,"updated_at":"2011-09-28T18:54:40Z"},{"created_at":"2011-09-28T18:54:40Z","foo_date":"2010-04-15","id":2,"updated_at":"2011-09-28T18:54:40Z"},{"created_at":"2011-09-28T18:54:40Z","foo_date":"2010-04-16","id":3,"updated_at":"2011-09-28T18:54:40Z"},{"created_at":"2011-09-28T18:54:40Z","foo_date":"2010-04-17","id":4,"updated_at":"2011-09-28T18:54:40Z"},{"created_at":"2011-09-28T18:54:40Z","foo_date":"2010-04-18","id":5,"updated_at":"2011-09-28T18:54:40Z"},{"created_at":"2011-09-28T18:54:40Z","foo_date":"2010-04-19","id":6,"updated_at":"2011-09-28T18:54:40Z"},{"created_at":"2011-09-28T18:54:40Z","foo_date":"2010-04-20","id":7,"updated_at":"2011-09-28T18:54:40Z"},{"created_at":"2011-09-28T18:54:40Z","foo_date":"2010-04-21","id":8,"updated_at":"2011-09-28T18:54:40Z"},{"created_at":"2011-09-28T18:54:40Z","foo_date":"2010-04-22","id":9,"updated_at":"2011-09-28T18:54:40Z"},{"created_at":"2011-09-28T18:54:40Z","foo_date":"2010-04-23","id":10,"updated_at":"2011-09-28T18:54:40Z"},{"created_at":"2011-09-28T18:54:40Z","foo_date":"2010-04-24","id":11,"updated_at":"2011-09-28T18:54:40Z"},{"created_at":"2011-09-28T18:54:40Z","foo_date":"2010-04-25","id":12,"updated_at":"2011-09-28T18:54:40Z"},{"created_at":"2011-09-28T18:54:40Z","foo_date":"2010-04-26","id":13,"updated_at":"2011-09-28T18:54:40Z"},{"created_at":"2011-09-28T18:54:40Z","foo_date":"2010-04-27","id":14,"updated_at":"2011-09-28T18:54:40Z"},{"created_at":"2011-09-28T18:54:40Z","foo_date":"2010-04-28","id":15,"updated_at":"2011-09-28T18:54:40Z"},{"created_at":"2011-09-28T18:54:40Z","foo_date":"2010-04-29","id":16,"updated_at":"2011-09-28T18:54:40Z"},{"created_at":"2011-09-28T18:54:40Z","foo_date":"2010-04-30","id":17,"updated_at":"2011-09-28T18:54:40Z"}]'
+    http_version: '1.1'
+- !ruby/struct:VCR::HTTPInteraction
+  request: !ruby/struct:VCR::Request
+    method: :get
+    uri: http://fake-foo-api.dev:80/foos/1.json
+    body: !!null 
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response: !ruby/struct:VCR::Response
+    status: !ruby/struct:VCR::ResponseStatus
+      code: 200
+      message: OK
+    headers:
+      content-type:
+      - application/json; charset=utf-8
+      x-ua-compatible:
+      - IE=Edge
+      etag:
+      - ! '"bd810a8ddd73cc87615a823a10df6522"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-runtime:
+      - '0.052432'
+    body: ! '{"created_at":"2011-09-28T18:54:40Z","foo_date":"2010-04-14","id":1,"updated_at":"2011-09-28T18:54:40Z"}'
+    http_version: '1.1'

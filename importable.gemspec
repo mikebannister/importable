@@ -27,4 +27,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "launchy", "~> 2.0.5"
   s.add_development_dependency "mocha", "~> 0.10.0"
   s.add_development_dependency "guard-rspec", "~> 0.4.5"
+  s.add_development_dependency "fakeweb", "~> 1.3.0"
+  s.add_development_dependency "vcr", "~> 1.11.3"
 end
