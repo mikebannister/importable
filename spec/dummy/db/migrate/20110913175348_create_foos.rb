@@ -16,6 +16,8 @@ class CreateFoos < ActiveRecord::Migration
 
       t.date :foobar_date
 
+      t.date :foo_relation_id
+
       t.timestamps
     end
   end

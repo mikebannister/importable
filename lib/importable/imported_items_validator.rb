@@ -4,11 +4,22 @@ module Importable
       # don't bother if there are already validation errors
       return if importer.errors[:base].any?
 
+      mapper = importer.mapper
+
       importer.invalid_items.each do |object, line_number|
         object.errors.messages.each do |error|
           field, errors = *error
-          errors.each do |message|
-            importer.errors[field] << "#{message} (line #{line_number})"
+          errors.each do |original_message|
+
+            original_val = mapper.original_value_for(line_number, field)
+
+            message = if original_val
+              "on line #{line_number} could not be found: #{original_val}"
+            else
+              "on line #{line_number} #{original_message}"
+            end
+
+            importer.errors[field] << message
           end
         end
       end

@@ -1,5 +1,6 @@
 module Importable
   class Mapper
+    attr_accessor :raw_data
     attr_accessor :data
     attr_accessor :invalid_items
 
@@ -16,6 +17,9 @@ module Importable
     end
 
     class << self
+
+      attr_accessor :from_mappings
+
       def require_param(name, message)
         @required_params ||= []
         @required_params << {
@@ -45,6 +49,23 @@ module Importable
         mapper_types.flat_map do |t|
           [ t.pluralize, t.singularize ]
         end.include?(type)
+      end
+
+      def register_from_mapping(from, to)
+        @from_mappings ||= {}
+        @from_mappings[from] = to
+      end
+
+      def method_missing(sym, *args, &block)
+        if sym.to_s.ends_with('_maps_from')
+          from = sym.to_s.slice(0...-10).to_sym
+          options = args.second || {}
+
+          register_from_mapping(from, args.first)
+          return
+        end
+
+        super(sym, *args, &block)
       end
     end
 
@@ -83,6 +104,16 @@ module Importable
       @data.each_with_index do |object, index|
         line_number = index + 2
         @invalid_items << [object, line_number] unless object.valid?
+      end
+    end
+
+    def original_value_for(line_number, field)
+      if self.class.from_mappings
+        original_key = self.class.from_mappings[field]
+        if original_key
+          line = @raw_data[line_number - 2]
+          line[original_key.to_s]
+        end
       end
     end
 

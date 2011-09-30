@@ -12,6 +12,16 @@ module Importable
       Spreadsheet.new(file: File.open(spreadsheet_file), mapper_name: 'foo_required_field')
     end
 
+    let(:foo_with_relations_spreadsheet) do
+      spreadsheet_file = support_file('foo_with_relations.xls')
+      Spreadsheet.new(file: File.open(spreadsheet_file), mapper_name: 'foo_with_relations')
+    end
+
+    let(:foo_with_relations_with_link_spreadsheet) do
+      spreadsheet_file = support_file('foo_with_relations.xls')
+      Spreadsheet.new(file: File.open(spreadsheet_file), mapper_name: 'foo_with_relations_with_link')
+    end
+
     let(:invalid_spreadsheet_require_params) do
       spreadsheet_file = support_file('foo_required_field_invalid.xlsx')
       Spreadsheet.new(file: File.open(spreadsheet_file), mapper_name: 'foo_required_param_and_field')
@@ -35,15 +45,22 @@ module Importable
       invalid_spreadsheet.errors.should be_empty
     end
 
+    it "should be valid if all underlying objects are valid" do
+      valid_spreadsheet.should be_valid
+    end
+
     it "should generate a list of meaningful error messages" do
       invalid_spreadsheet.valid?
       messages = invalid_spreadsheet.errors.messages[:doof]
-      messages.should include "can't be blank (line 3)"
-      messages.should include "can't be blank (line 4)"
+      messages.should include "on line 3 can't be blank"
+      messages.should include "on line 4 can't be blank"
     end
 
-    it "should be valid if all underlying objects are valid" do
-      valid_spreadsheet.should be_valid
+    it "should generate errors messages that show the original value if it was not blank but resulted in a nil attribute" do
+      foo_with_relations_spreadsheet.valid?
+
+      messages = foo_with_relations_spreadsheet.errors.messages[:foo_relation_id]
+      messages.should include "on line 5 could not be found: exists not"
     end
   end
 end

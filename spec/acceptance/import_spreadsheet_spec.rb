@@ -21,16 +21,16 @@ feature "Import spreadsheet" do
     click_button "Continue"
     page.should have_content "Sheet2 worksheet of foo spreadsheet was successfully imported."
   end
-  
+
   scenario "Import invalid spreadsheet" do
     spreadsheet_file = support_file('foo_required_field_invalid.xlsx')
 
     visit '/import/foo_required_field/spreadsheet'
     attach_file("Choose foo required field spreadsheet file", spreadsheet_file)
     click_button "Upload"
-    page.should have_content "Doof can't be blank (line 3)"
+    page.should have_content "Doof on line 3 can't be blank"
   end
-  
+
   scenario "Import invalid multi worksheet spreadsheet" do
     spreadsheet_file = support_file('foo_multi_worksheet_required_field_invalid.xlsx')
 
@@ -39,7 +39,7 @@ feature "Import spreadsheet" do
     click_button "Upload"
     page.should have_content "Choose worksheet"
     click_button "Continue"
-    page.should have_content "Doof can't be blank (line 3)"
+    page.should have_content "Doof on line 3 can't be blank"
   end
 
   scenario "Import redirects to index page if requested" do

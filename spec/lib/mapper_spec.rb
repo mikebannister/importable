@@ -108,11 +108,12 @@ module Importable
         Mapper.mapper_types[4].should eq 'foo_required_param_and_field'
         Mapper.mapper_types[5].should eq 'foo_required_param_resource'
         Mapper.mapper_types[6].should eq 'foo_resource'
-        Mapper.mapper_types[7].should eq 'moof'
-        Mapper.mapper_types[8].should eq 'plural_widgets'
-        Mapper.mapper_types[9].should eq 'singular_widget'
+        Mapper.mapper_types[7].should eq 'foo_with_relations'
+        Mapper.mapper_types[8].should eq 'moof'
+        Mapper.mapper_types[9].should eq 'plural_widgets'
+        Mapper.mapper_types[10].should eq 'singular_widget'
 
-        Mapper.mapper_types.should have_exactly(10).items
+        Mapper.mapper_types.should have_exactly(11).items
       end
     end
 

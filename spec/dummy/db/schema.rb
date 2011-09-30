@@ -20,6 +20,11 @@ ActiveRecord::Schema.define(:version => 20110925054334) do
     t.datetime "updated_at"
   end
 
+  create_table "foo_relations", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "foo_required_fields", :force => true do |t|
     t.integer  "moof"
     t.integer  "doof"
@@ -39,6 +44,7 @@ ActiveRecord::Schema.define(:version => 20110925054334) do
     t.integer  "s"
     t.integer  "t"
     t.date     "foobar_date"
+    t.date     "foo_relation_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
