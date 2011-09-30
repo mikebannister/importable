@@ -14,7 +14,11 @@ module Importable
             original_val = mapper.original_value_for(line_number, field)
 
             message = if original_val
-              "on line #{line_number} could not be found: #{original_val}"
+              if importer.class == Spreadsheet
+                "on line #{line_number} could not be found: #{original_val}"
+              else
+                "could not be found: #{original_val}"
+              end
             else
               "on line #{line_number} #{original_message}"
             end

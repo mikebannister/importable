@@ -56,11 +56,19 @@ module Importable
       messages.should include "on line 4 can't be blank"
     end
 
-    it "should generate errors messages that show the original value if it was not blank but resulted in a nil attribute" do
-      foo_with_relations_spreadsheet.valid?
+    describe "spreadsheet" do
+      it "should generate errors messages that show the original value if it was not blank but resulted in a nil attribute" do
+        foo_with_relations_spreadsheet.valid?
 
-      messages = foo_with_relations_spreadsheet.errors.messages[:foo_relation_id]
-      messages.should include "on line 5 could not be found: exists not"
+        messages = foo_with_relations_spreadsheet.errors.messages[:foo_relation_id]
+        messages.should include "on line 5 could not be found: exists not"
+      end
+    end
+
+    describe "resource" do
+      it "should generate errors messages that show the original value if it was not blank but resulted in a nil attribute" do
+        pending "needs spec"
+      end
     end
   end
 end
